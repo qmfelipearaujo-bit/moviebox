@@ -96,6 +96,8 @@ button { color: inherit; }
 .player-protection { border:1px solid rgba(255,255,255,.16); border-radius:999px; padding:8px 11px; background:#141722; color:#f5f7fb; font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; }
 .player-protection.is-on { background:#10251a; border-color:#285e3d; }
 .player-protection.is-off { background:#39240c; border-color:#815719; }
+.player-protection.is-ios { background:#10243a; border-color:#2b6297; }
+.player-security-warning { color:#ffd7a1; background:#1b1208; }
 .player-security-note { padding:7px 14px; text-align:center; font-size:11px; line-height:1.35; color:#aeb6c5; background:#07080d; border-top:1px solid rgba(255,255,255,.06); }
 @media (max-width: 640px) {
   .player-topbar strong { max-width:42vw; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -141,7 +143,7 @@ button { color: inherit; }
   .detail-actions { margin-top:14px; }
   .detail-actions button { flex:1; }
   .episode { grid-template-columns:34px 1fr auto; padding:10px; }
-  .bottom-nav { display:grid; grid-template-columns:repeat(4,1fr); position:fixed; z-index:80; left:10px; right:10px; bottom:calc(8px + env(safe-area-inset-bottom)); border:1px solid #ffffff12; background:#10121aeb; backdrop-filter:blur(18px); border-radius:16px; padding:6px; box-shadow:0 14px 45px #000a; }
+  .bottom-nav { display:grid; grid-template-columns:repeat(6,1fr); position:fixed; z-index:80; left:10px; right:10px; bottom:calc(8px + env(safe-area-inset-bottom)); border:1px solid #ffffff12; background:#10121aeb; backdrop-filter:blur(18px); border-radius:16px; padding:6px; box-shadow:0 14px 45px #000a; }
   .bottom-nav button { border:0;background:transparent;color:#777d8c;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px;border-radius:10px; }
   .bottom-nav button span { font-size:22px; line-height:1; }
   .bottom-nav button small { font-size:10px; }
@@ -294,4 +296,85 @@ button { color: inherit; }
   .pwa-install-card { grid-template-columns:auto 1fr auto; padding:11px; }
   .pwa-install-icon { width:40px; height:40px; font-size:21px; }
   .pwa-install-copy p { font-size:10px; }
+}
+
+/* v1.4 · catálogo ampliado, ao vivo, contas e downloads canceláveis */
+.player-home-btn { display:inline-flex; align-items:center; justify-content:center; min-height:38px; padding:0 12px; border:1px solid #ffffff18; border-radius:999px; background:#11141d; color:#fff; font-weight:800; font-size:12px; text-decoration:none; cursor:pointer; white-space:nowrap; }
+.player-home-btn:hover { background:#1a1e29; }
+.download-progress-actions { display:flex; justify-content:flex-end; margin-top:10px; }
+.cancel-download { padding:9px 13px; font-size:12px; }
+.cancel-download:disabled { opacity:.5; cursor:not-allowed; }
+
+.live-page { padding-bottom:125px; }
+.live-tabs { margin-top:24px; }
+.live-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:14px; margin-top:18px; }
+.live-card { display:grid; grid-template-columns:58px minmax(0,1fr); gap:14px; align-items:start; border:1px solid var(--line); background:#10121a; border-radius:16px; padding:15px; }
+.live-card-icon { width:58px; height:58px; display:grid; place-items:center; border-radius:14px; background:#181b25; font-size:30px; }
+.live-card-copy h3 { margin:5px 0 7px; font-size:21px; }
+.live-card-copy p { margin:0; min-height:48px; color:#8f95a5; font-size:12px; line-height:1.5; }
+.live-card-actions { grid-column:1/-1; display:flex; gap:8px; flex-wrap:wrap; }
+.custom-tv-form { margin-top:24px; padding:18px; border:1px solid var(--line); background:#10121a; border-radius:18px; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.custom-tv-form > div { grid-column:1/-1; }
+.custom-tv-form h2 { margin:5px 0; }
+.custom-tv-form p { margin:0; color:#8f95a5; }
+.custom-tv-form input { min-width:0; padding:12px 13px; color:#fff; background:#0b0d13; border:1px solid var(--line); border-radius:10px; outline:none; }
+.custom-tv-form .primary { justify-self:start; }
+.live-video { width:100%; height:100%; object-fit:contain; background:#000; }
+.radio-toolbar { display:flex; gap:12px; justify-content:space-between; align-items:center; margin:18px 0; }
+.country-pills { display:flex; flex-wrap:wrap; gap:7px; }
+.country-pills button { border:1px solid var(--line); background:#11131b; color:#aaaebe; padding:9px 12px; border-radius:999px; cursor:pointer; }
+.country-pills button.active { background:#fff; color:#090a0d; font-weight:800; }
+.radio-toolbar input { flex:1; max-width:420px; min-height:42px; padding:0 13px; border:1px solid var(--line); background:#11131b; color:#fff; border-radius:12px; outline:none; }
+.radio-now { display:grid; grid-template-columns:58px minmax(0,1fr) minmax(230px,420px); align-items:center; gap:14px; border:1px solid #ffffff1a; background:linear-gradient(135deg,#151821,#0c0e14); padding:13px; border-radius:16px; margin-bottom:15px; }
+.radio-now-icon,.radio-logo { overflow:hidden; display:grid; place-items:center; background:#191c26; }
+.radio-now-icon { width:58px; height:58px; border-radius:13px; font-size:26px; }
+.radio-now-icon img,.radio-logo img { width:100%; height:100%; object-fit:cover; }
+.radio-now > div:nth-child(2) { min-width:0; display:grid; gap:2px; }
+.radio-now strong { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.radio-now small { color:#828898; }
+.radio-now audio { width:100%; }
+.radio-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:10px; }
+.radio-card { display:grid; grid-template-columns:48px minmax(0,1fr) auto; gap:11px; align-items:center; border:1px solid var(--line); background:#10121a; color:#fff; border-radius:13px; padding:10px; text-align:left; cursor:pointer; }
+.radio-card.playing { border-color:#e5091466; background:#181117; }
+.radio-logo { width:48px; height:48px; border-radius:10px; font-size:22px; }
+.radio-card > div:nth-child(2) { min-width:0; display:grid; gap:2px; }
+.radio-card strong { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.radio-card span,.radio-card small { color:#868c9b; font-size:11px; }
+.radio-card b { color:#fff; }
+
+.account-page { padding-bottom:125px; }
+.account-card { max-width:850px; border:1px solid var(--line); background:linear-gradient(135deg,#141721,#0d0f16); border-radius:18px; padding:22px; display:grid; gap:13px; margin-top:20px; }
+.account-card h2 { margin:3px 0; font-size:28px; }
+.account-card p { margin:0 0 5px; color:#999fae; line-height:1.6; }
+.account-card label { display:grid; gap:7px; color:#b8bdc9; font-size:12px; font-weight:800; }
+.account-card input { width:100%; min-height:48px; color:#fff; background:#080a10; border:1px solid var(--line); border-radius:10px; padding:11px 13px; outline:none; }
+.account-card input:focus { border-color:#ffffff38; }
+.account-actions { display:flex; flex-wrap:wrap; gap:9px; }
+.account-signed { grid-template-columns:70px minmax(0,1fr); align-items:start; }
+.account-signed .account-actions { grid-column:1/-1; }
+.account-avatar { width:70px; height:70px; display:grid; place-items:center; border-radius:50%; background:#1b1e29; font-size:30px; }
+.account-note { max-width:850px; margin-top:14px; padding:14px 16px; border:1px solid #ffffff0e; background:#0b0d13; border-radius:13px; color:#9298a7; }
+.account-note strong { color:#fff; }
+.account-note p { margin:5px 0 0; line-height:1.55; font-size:12px; }
+.account-message { max-width:850px; }
+
+@media (max-width:760px) {
+  .bottom-nav { grid-template-columns:repeat(6,1fr); left:6px; right:6px; gap:0; padding:5px 3px; }
+  .bottom-nav button { padding:6px 2px; }
+  .bottom-nav button span { font-size:19px; }
+  .bottom-nav button small { font-size:8px; }
+  .player-topbar { min-height:64px; align-items:flex-start; }
+  .player-actions { gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+  .player-home-btn { min-height:34px; font-size:10px; padding:0 9px; }
+  .player-fullscreen-btn { display:none; }
+  .custom-tv-form { grid-template-columns:1fr; }
+  .custom-tv-form > div { grid-column:auto; }
+  .radio-toolbar { align-items:stretch; flex-direction:column; }
+  .radio-toolbar input { max-width:none; width:100%; }
+  .radio-now { grid-template-columns:48px 1fr; }
+  .radio-now-icon { width:48px; height:48px; }
+  .radio-now audio { grid-column:1/-1; }
+  .radio-grid { grid-template-columns:1fr; }
+  .account-signed { grid-template-columns:56px 1fr; }
+  .account-avatar { width:56px; height:56px; }
 }

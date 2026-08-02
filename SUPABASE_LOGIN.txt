@@ -1,0 +1,37 @@
+MOVIEBOX v1.4 - LOGIN E SINCRONIZACAO COM SUPABASE
+==================================================
+
+1. Crie um projeto gratuito em https://supabase.com
+2. Em Project Settings/API copie:
+   - Project URL
+   - Publishable key / anon public key
+3. No SQL Editor do Supabase execute:
+
+create table if not exists public.moviebox_library (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  favorites jsonb not null default '[]'::jsonb,
+  history jsonb not null default '[]'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.moviebox_library enable row level security;
+
+drop policy if exists "moviebox_select_own" on public.moviebox_library;
+create policy "moviebox_select_own" on public.moviebox_library
+for select using (auth.uid() = user_id);
+
+drop policy if exists "moviebox_insert_own" on public.moviebox_library;
+create policy "moviebox_insert_own" on public.moviebox_library
+for insert with check (auth.uid() = user_id);
+
+drop policy if exists "moviebox_update_own" on public.moviebox_library;
+create policy "moviebox_update_own" on public.moviebox_library
+for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+4. Abra MovieBox > Conta e cole Project URL e chave publica.
+5. Crie uma conta ou entre.
+
+OBSERVACOES
+- A chave anon/publishable e feita para uso no cliente quando RLS esta configurado.
+- Nunca use service_role key no aplicativo.
+- Downloads nao sao enviados para a nuvem; apenas favoritos e historico.

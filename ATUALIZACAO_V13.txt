@@ -1,0 +1,14 @@
+MOVIEBOX PRIVATE v1.3
+
+CORRECAO PRINCIPAL
+- Compatibilidade do player com Safari/iPhone/PWA.
+- iPhone passa a abrir o player no modo "iPhone compativel" automaticamente.
+- Mantem pop-ups e redirecionamentos bloqueados nesse modo.
+- Adicionado botao para recarregar o player.
+- Mantido modo "Compatibilidade total" como fallback manual se um provedor especifico ainda ficar preto.
+
+COMO ATUALIZAR
+1. Substitua os arquivos desta versao no repositorio GitHub.
+2. Rode Actions > Publicar MovieBox para iPhone.
+3. Quando concluir com Success, feche e reabra o MovieBox no iPhone.
+4. Se o iPhone continuar mostrando a versao antiga, abra o endereco no Safari e recarregue uma vez; depois abra novamente o icone da Tela de Inicio.

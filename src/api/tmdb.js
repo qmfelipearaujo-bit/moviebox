@@ -40,10 +40,12 @@ async function request(path, params = {}) {
 
 export const tmdb = {
   trending: () => request('/trending/all/day'),
-  popularMovies: () => request('/movie/popular', { region: TMDB_REGION }),
-  nowPlaying: () => request('/movie/now_playing', { region: TMDB_REGION }),
-  popularTv: () => request('/tv/popular'),
-  topRatedMovies: () => request('/movie/top_rated', { region: TMDB_REGION }),
+  popularMovies: (page = 1) => request('/movie/popular', { region: TMDB_REGION, page }),
+  nowPlaying: (page = 1) => request('/movie/now_playing', { region: TMDB_REGION, page }),
+  popularTv: (page = 1) => request('/tv/popular', { page }),
+  topRatedMovies: (page = 1) => request('/movie/top_rated', { region: TMDB_REGION, page }),
+  discoverMovies: (genreId, page = 1) => request('/discover/movie', { region: TMDB_REGION, with_genres: genreId, sort_by: 'popularity.desc', include_adult: false, page }),
+  movieGenres: () => request('/genre/movie/list'),
   search: (query) => request('/search/multi', { query, include_adult: false }),
   movieDetails: (id) => request(`/movie/${id}`, { append_to_response: 'credits,videos,recommendations' }),
   tvDetails: (id) => request(`/tv/${id}`, { append_to_response: 'credits,videos,recommendations' }),

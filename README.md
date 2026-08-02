@@ -1,55 +1,26 @@
-# MovieBox Private v1.2
+# MovieBox Private v1.4
 
-Aplicativo pessoal de filmes e séries com duas formas de instalação:
+Aplicativo pessoal de catálogo e reprodução, com Android via Capacitor e versão PWA para iPhone.
 
-- **Android:** APK via GitHub Actions.
-- **iPhone:** PWA/Web App via GitHub Pages, sem App Store e sem Mac.
+## v1.4
 
-## Principais recursos
+- catálogo inicial ampliado e separado por gêneros;
+- player com botão Início e modo imersivo Android;
+- downloads Android gerenciados pelo DownloadManager, com cancelamento e indicador de velocidade;
+- aba Ao vivo com TV e rádios;
+- rádios do Brasil, Estados Unidos e Moçambique via Radio Browser;
+- cadastro de canais próprios;
+- conta opcional com Supabase para sincronizar favoritos e histórico;
+- mantém PWA para iPhone e proteção do player.
 
-- Catálogo e pesquisa via TMDB.
-- Player incorporado com proteção contra pop-ups/redirecionamentos.
-- Filmes e séries, temporadas e episódios.
-- Favoritos e histórico locais.
-- Internet Archive, Open Movies e Meus Links.
-- Busca automática de capa/metadados no TMDB para links cadastrados.
-- Downloads nativos no Android.
-- Encaminhamento de downloads diretos para Safari/Arquivos no iPhone.
-- Manifesto PWA, ícone e modo standalone no iOS.
-- Service Worker para cache do shell/interface.
+## Login em nuvem
 
-## Token TMDB
+Leia `SUPABASE_LOGIN.txt`. O login é opcional: sem Supabase, o MovieBox continua funcionando com favoritos e histórico locais.
 
-O token não precisa ficar no GitHub. Na primeira execução, o MovieBox pede o
-**API Read Access Token** e o salva no armazenamento local do dispositivo.
+## Build Android
 
-## Android
+Use GitHub Actions → **Gerar APK Android**. O workflow v1.4 instala automaticamente o plugin nativo usado para modo imersivo e cancelamento de downloads.
 
-Use o workflow:
+## iPhone
 
-`Actions → Gerar APK Android → Run workflow`
-
-O APK será disponibilizado em Artifacts.
-
-## iPhone (GitHub Pages)
-
-Leia `IPHONE_PWA.txt`.
-
-Resumo:
-
-1. Em `Settings → Pages`, selecione **GitHub Actions** como Source.
-2. Execute `Actions → Publicar MovieBox para iPhone → Run workflow`.
-3. Abra a URL publicada no Safari do iPhone.
-4. `Compartilhar → Adicionar à Tela de Início → Abrir como App da Web`.
-
-### GitHub Free
-
-GitHub Pages é gratuito para repositórios públicos em contas GitHub Free. Como
-o token TMDB é cadastrado no aparelho, ele não precisa ser publicado junto com
-o código.
-
-## Observação sobre offline no iPhone
-
-O PWA consegue manter a interface em cache, mas arquivos grandes não usam o
-mesmo armazenamento nativo do APK. Ao baixar um vídeo direto no iPhone, o Safari
-é usado para salvar o arquivo em Downloads/Arquivos.
+Use GitHub Actions → **Publicar MovieBox para iPhone** e adicione a página à Tela de Início pelo Safari.

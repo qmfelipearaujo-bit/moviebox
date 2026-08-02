@@ -1,0 +1,27 @@
+MOVIEBOX PRIVATE v1.4
+=====================
+
+PRINCIPAIS MUDANCAS
+- Tela inicial muito maior: duas paginas de populares, series, cinemas e avaliados.
+- Novas fileiras por genero: Acao, Comedia, Suspense, Terror, Ficcao cientifica, Animacao, Romance, Crime, Familia e Documentarios.
+- Player com botao Inicio.
+- APK Android entra em modo imersivo ao abrir o player e tenta ocultar barras do sistema.
+- Download Android usa DownloadManager nativo quando disponivel.
+- Botao Cancelar download real no APK v1.4.
+- Velocidade do download exibida em MB/s.
+- Nova area Ao vivo: TV + radios.
+- TV Brasil oficial integrada; atalhos oficiais para TVM Mocambique e NASA Live, alem de canais personalizados.
+- Radios Brasil, Estados Unidos e Mocambique via Radio Browser.
+- Nova area Conta com login opcional via Supabase para sincronizar favoritos e historico.
+- SUPABASE_LOGIN.txt explica a configuracao gratuita.
+
+AUDIO DO PLAYER
+A API publica do EmbedMovies nao documenta parametro para escolher idioma/faixa de audio.
+Por isso o MovieBox nao consegue criar uma faixa em ingles quando a fonte nao a oferece.
+A selecao de audio continua sendo feita dentro do player/fonte quando existir.
+
+IPHONE / PWA E TELA CHEIA
+O MovieBox tenta usar o modo de tela cheia permitido pelo Safari. O iOS pode manter a barra de status em PWAs mesmo em fullscreen/standalone; isso e uma limitacao do WebKit. No APK Android a v1.4 consegue ocultar as barras do sistema com o recurso nativo.
+
+DOWNLOADS
+O DownloadManager pode melhorar estabilidade, retomada pelo sistema e comportamento em segundo plano, mas nao pode ultrapassar limites de velocidade impostos pelo servidor, Wi-Fi/4G/5G ou provedor.

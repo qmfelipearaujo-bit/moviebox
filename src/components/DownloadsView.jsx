@@ -8,16 +8,19 @@ import { deleteOfflineMovie, downloadOfflineMovie, getOfflineMovieSrc, isNativeO
 import { getDownloads } from '../services/storage'
 import LocalPlayerModal from './LocalPlayerModal'
 
-function DownloadProgress({ task, formatBytes = commonsFormatBytes }) {
+function DownloadProgress({ task, formatBytes = commonsFormatBytes, onCancel }) {
   return (
     <div className="download-progress-wrap">
-      <div className="download-progress-line"><span>Baixando {task.percent == null ? '' : `${task.percent}%`}</span><strong>{task.bytes ? formatBytes(task.bytes) : ''}</strong></div>
+      <div className="download-progress-line"><span>Baixando {task.percent == null ? '' : `${task.percent}%`}</span><strong>{task.bytes ? formatBytes(task.bytes) : ''}{task.speedBps ? ` · ${(task.speedBps / 1024 / 1024).toFixed(1)} MB/s` : ''}</strong></div>
       <div className="download-progress"><span style={{ width: `${task.percent || 4}%` }} /></div>
+      <div className="download-progress-actions">
+        <button className="secondary cancel-download" disabled={!task.cancel} onClick={onCancel}>{task.cancel ? 'Cancelar download' : 'Preparando cancelamento…'}</button>
+      </div>
     </div>
   )
 }
 
-function CuratedCard({ item, media, downloaded, task, onDownload, onPlay, onDelete }) {
+function CuratedCard({ item, media, downloaded, task, onDownload, onCancel, onPlay, onDelete }) {
   const [quality, setQuality] = useState('')
   const options = media?.options || []
   const selected = useMemo(() => options.find((o) => o.quality === quality) || options.find((o) => o.height === 720) || options.find((o) => o.height === 480) || options[0], [options, quality])
@@ -35,7 +38,7 @@ function CuratedCard({ item, media, downloaded, task, onDownload, onPlay, onDele
         <div className="offline-credit">{item.attribution}</div>
         {downloaded ? (
           <div className="offline-actions"><button className="primary" onClick={() => onPlay(downloaded)}>▶ Assistir offline</button><button className="secondary" onClick={() => onDelete(downloaded)}>Excluir</button></div>
-        ) : task?.status === 'downloading' ? <DownloadProgress task={task} /> : media?.error ? (
+        ) : task?.status === 'downloading' ? <DownloadProgress task={task} onCancel={() => onCancel(item.id)} /> : media?.error ? (
           <div className="offline-error">Não foi possível consultar o arquivo agora. Verifique a internet e tente novamente.</div>
         ) : !media ? <div className="mini-loader">Consultando qualidades…</div> : (
           <>
@@ -48,7 +51,7 @@ function CuratedCard({ item, media, downloaded, task, onDownload, onPlay, onDele
   )
 }
 
-function ArchiveCard({ item, resolved, downloaded, task, onResolve, onDownload, onPlay, onDelete, onMessage }) {
+function ArchiveCard({ item, resolved, downloaded, task, onResolve, onDownload, onCancel, onPlay, onDelete, onMessage }) {
   const [quality, setQuality] = useState('')
   const options = resolved?.options || []
   const selected = useMemo(() => options.find((o) => o.quality === quality) || options.find((o) => o.height === 720) || options.find((o) => o.height === 480) || options[0], [options, quality])
@@ -70,7 +73,7 @@ function ArchiveCard({ item, resolved, downloaded, task, onResolve, onDownload, 
 
         {downloaded ? (
           <div className="offline-actions"><button className="primary" onClick={() => onPlay(downloaded)}>▶ Assistir offline</button><button className="secondary" onClick={() => onDelete(downloaded)}>Excluir</button></div>
-        ) : task?.status === 'downloading' ? <DownloadProgress task={task} formatBytes={archiveFormatBytes} /> : resolved?.error ? (
+        ) : task?.status === 'downloading' ? <DownloadProgress task={task} formatBytes={archiveFormatBytes} onCancel={() => onCancel(item.id)} /> : resolved?.error ? (
           <div className="offline-error">{resolved.message}</div>
         ) : !resolved ? (
           <div className="offline-actions"><button className="primary" onClick={() => onResolve(item)}>Encontrar downloads</button><a className="secondary link-button" href={item.sourceUrl} target="_blank" rel="noreferrer">Abrir fonte</a></div>
@@ -102,7 +105,7 @@ function MetadataResults({ lookup, onUse }) {
   )
 }
 
-function CustomSources({ sources, onAdd, onUpdate, onRemove, downloads, tasks, onDownload, onPlay, onDelete, onMessage }) {
+function CustomSources({ sources, onAdd, onUpdate, onRemove, downloads, tasks, onDownload, onCancel, onPlay, onDelete, onMessage }) {
   const emptyForm = { title: '', url: '', license: '', poster: '', backdrop: '', overview: '', year: '', mediaType: '', tmdbId: null, season: null, episode: null }
   const [form, setForm] = useState(emptyForm)
   const [lookup, setLookup] = useState(null)
@@ -218,7 +221,7 @@ function CustomSources({ sources, onAdd, onUpdate, onRemove, downloads, tasks, o
         return <article className="custom-source-card custom-source-card-v11" key={item.id}>
           <div className="custom-source-icon source-poster">{item.poster ? <img src={item.poster} alt="" /> : direct ? '🎞️' : item.type === 'magnet' ? '🧲' : '🌐'}</div>
           <div className="custom-source-info"><span className="eyebrow">{item.type === 'direct' ? 'DOWNLOAD DIRETO' : item.type === 'magnet' ? 'MAGNET' : 'TORRENT'}{item.mediaType ? ` · ${item.mediaType === 'tv' ? 'SÉRIE' : 'FILME'}` : ''}</span><h3>{item.title}</h3><p className="source-url">{item.url}</p><small>{item.year ? `${item.year} · ` : ''}{item.license || 'Direitos não informados'}</small>
-            {task?.status === 'downloading' && <DownloadProgress task={task} />}
+            {task?.status === 'downloading' && <DownloadProgress task={task} onCancel={() => onCancel(item.id)} />}
             {editingLookup?.id === item.id && editingLookup.error && <div className="mini-meta-error">{editingLookup.error}</div>}
           </div>
           <div className="custom-source-actions">
@@ -300,12 +303,34 @@ export default function DownloadsView() {
       setMessage('No iPhone, o Safari abrirá o arquivo ou o gerenciador de download. Se o vídeo abrir em vez de baixar, use Compartilhar → Salvar em Arquivos.')
       return
     }
-    setMessage(''); setTasks((t) => ({ ...t, [item.id]: { status: 'downloading', percent: 0, bytes: 0 } }))
+    setMessage(''); setTasks((t) => ({ ...t, [item.id]: { status: 'downloading', percent: 0, bytes: 0, cancel: null } }))
     try {
-      await downloadOfflineMovie(item, media, option, (progress) => setTasks((t) => ({ ...t, [item.id]: { status: 'downloading', ...progress } })))
+      await downloadOfflineMovie(
+        item,
+        media,
+        option,
+        (progress) => setTasks((t) => ({ ...t, [item.id]: { ...(t[item.id] || {}), status: 'downloading', ...progress } })),
+        (cancel) => setTasks((t) => ({ ...t, [item.id]: { ...(t[item.id] || {}), status: 'downloading', cancel } })),
+      )
       setTasks((t) => ({ ...t, [item.id]: { status: 'done', percent: 100 } }))
       await reloadDownloads(); setTab('downloads')
-    } catch (error) { setTasks((t) => ({ ...t, [item.id]: { status: 'error' } })); setMessage(`Falha no download de ${item.title}: ${error?.message || 'erro desconhecido'}`) }
+    } catch (error) {
+      if (error?.code === 'DOWNLOAD_CANCELLED' || error?.message === 'DOWNLOAD_CANCELLED') {
+        setTasks((t) => ({ ...t, [item.id]: { status: 'cancelled' } }))
+        setMessage(`Download de ${item.title} cancelado.`)
+      } else {
+        setTasks((t) => ({ ...t, [item.id]: { status: 'error' } }))
+        setMessage(`Falha no download de ${item.title}: ${error?.message || 'erro desconhecido'}`)
+      }
+    }
+  }
+
+  const cancelDownload = async (itemId) => {
+    const cancel = tasks[itemId]?.cancel
+    if (!cancel) return
+    setMessage('Cancelando download…')
+    try { await cancel() } catch {}
+    setTasks((t) => ({ ...t, [itemId]: { status: 'cancelled' } }))
   }
 
   const play = async (record) => {
@@ -320,7 +345,7 @@ export default function DownloadsView() {
 
   return (
     <main className="page padded-page offline-page">
-      <div className="page-head"><div><span className="eyebrow">MODO OFFLINE · v1.2</span><h1>Downloads e fontes</h1><p className="page-subtitle">Internet Archive, Open Movies e uma área livre para você testar as fontes que escolher.</p></div></div>
+      <div className="page-head"><div><span className="eyebrow">MODO OFFLINE · v1.4</span><h1>Downloads e fontes</h1><p className="page-subtitle">Internet Archive, Open Movies e uma área livre para você testar as fontes que escolher.</p></div></div>
 
       <div className="offline-note legal-note"><strong>O MovieBox não bloqueia downloads com base no campo de licença.</strong><p>Quando a fonte fornece informações de direitos/licença, o aplicativo apenas as exibe. A decisão de usar uma fonte fica com o proprietário do aplicativo.</p></div>
       {webMode && <div className="offline-note web-download-note"><strong>iPhone / versão web.</strong><p>O MovieBox pode encaminhar arquivos diretos ao Safari. Eles ficam nos Downloads/Arquivos do iPhone, fora do armazenamento interno do MovieBox. Para downloads gerenciados dentro do app, continue usando o APK Android.</p></div>}
@@ -336,12 +361,12 @@ export default function DownloadsView() {
       {tab === 'archive' && <>
         <form className="archive-search" onSubmit={(e) => { e.preventDefault(); runArchiveSearch() }}><input value={archiveQuery} onChange={(e) => setArchiveQuery(e.target.value)} placeholder="Pesquisar título, assunto..." /><button className="primary" type="submit">Pesquisar</button></form>
         <div className="archive-hint">Resultados de vídeos do Internet Archive. O MovieBox mostra os metadados de direitos quando existirem, mas não exige licença aberta para listar os arquivos disponíveis.</div>
-        {archiveLoading ? <div className="full-loader compact-loader"><span className="loader" /><p>Pesquisando Internet Archive…</p></div> : <div className="offline-grid">{archiveItems.map((item) => <ArchiveCard key={item.id} item={item} resolved={archiveResolved[item.id]} downloaded={downloads.find((d) => d.downloadId === item.id)} task={tasks[item.id]} onResolve={resolveArchive} onDownload={download} onPlay={play} onDelete={remove} onMessage={setMessage} />)}</div>}
+        {archiveLoading ? <div className="full-loader compact-loader"><span className="loader" /><p>Pesquisando Internet Archive…</p></div> : <div className="offline-grid">{archiveItems.map((item) => <ArchiveCard key={item.id} item={item} resolved={archiveResolved[item.id]} downloaded={downloads.find((d) => d.downloadId === item.id)} task={tasks[item.id]} onResolve={resolveArchive} onDownload={download} onCancel={cancelDownload} onPlay={play} onDelete={remove} onMessage={setMessage} />)}</div>}
       </>}
 
-      {tab === 'curated' && <div className="offline-grid">{OFFLINE_CATALOG.map((item) => <CuratedCard key={item.id} item={item} media={metadata[item.id]} downloaded={downloads.find((d) => d.downloadId === item.id)} task={tasks[item.id]} onDownload={download} onPlay={play} onDelete={remove} />)}</div>}
+      {tab === 'curated' && <div className="offline-grid">{OFFLINE_CATALOG.map((item) => <CuratedCard key={item.id} item={item} media={metadata[item.id]} downloaded={downloads.find((d) => d.downloadId === item.id)} task={tasks[item.id]} onDownload={download} onCancel={cancelDownload} onPlay={play} onDelete={remove} />)}</div>}
 
-      {tab === 'custom' && <CustomSources sources={customSources} onAdd={addSource} onUpdate={updateSource} onRemove={removeSource} downloads={downloads} tasks={tasks} onDownload={download} onPlay={play} onDelete={remove} onMessage={setMessage} />}
+      {tab === 'custom' && <CustomSources sources={customSources} onAdd={addSource} onUpdate={updateSource} onRemove={removeSource} downloads={downloads} tasks={tasks} onDownload={download} onCancel={cancelDownload} onPlay={play} onDelete={remove} onMessage={setMessage} />}
 
       {tab === 'downloads' && (!downloads.length ? <div className="empty">Nenhum filme baixado ainda.</div> : <div className="download-library">{downloads.map((item) => <article className="downloaded-card" key={item.downloadId}><div className="downloaded-thumb">{item.thumbUrl ? <img src={item.thumbUrl} alt="" /> : '🎬'}</div><div className="downloaded-info"><span className="eyebrow">DISPONÍVEL OFFLINE</span><h3>{item.title}</h3><p>{item.quality} · {item.license}</p><small>{item.attribution}</small></div><div className="downloaded-actions"><button className="primary" onClick={() => play(item)}>▶ Assistir</button><button className="text-btn" onClick={() => remove(item)}>Excluir</button></div></article>)}</div>)}
 
