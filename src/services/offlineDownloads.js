@@ -43,7 +43,7 @@ export async function downloadOfflineMovie(item, media, option, onProgress = () 
       path: fileInfo.uri,
       progress: true,
       headers: {
-        'User-Agent': 'MovieBoxPrivate/1.0 (personal Android app; user-selected media download)',
+        'User-Agent': 'MovieBoxPrivate/1.1 (personal Android app; user-selected media download)',
         'Accept': 'video/webm,video/mp4,video/ogg,*/*',
       },
     })

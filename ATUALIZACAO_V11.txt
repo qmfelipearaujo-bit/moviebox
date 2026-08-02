@@ -1,0 +1,14 @@
+MOVIEBOX PRIVATE v1.1 — AUTO CAPA E METADADOS
+
+Novidades:
+- Ao colar uma URL ou magnet em Meus Links, o app tenta extrair o título do nome do arquivo/link.
+- Reconhece padrões comuns como Nome.Do.Filme.1999.1080p.mp4.
+- Reconhece séries com S01E02 e 1x02.
+- Consulta o TMDB usando o token já cadastrado no MovieBox.
+- Preenche automaticamente título, capa, ano, tipo (filme/série), sinopse e ID TMDB quando a correspondência é forte.
+- Se houver dúvida, mostra até 6 candidatos para você escolher.
+- Campo de pesquisa manual para corrigir o título quando a URL não contém um nome claro.
+- Links antigos sem capa ganham botão "Buscar capa".
+- A capa selecionada também aparece em Meus Links e é salva junto ao download offline.
+
+O recurso usa apenas metadados e imagens do TMDB. A URL de mídia continua sendo exatamente a URL informada pelo usuário.

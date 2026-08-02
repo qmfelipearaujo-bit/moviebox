@@ -1,6 +1,6 @@
-MOVIEBOX PRIVATE v1.0 - ATUALIZAÇÃO NO GITHUB
+MOVIEBOX PRIVATE v1.1 - ATUALIZAÇÃO NO GITHUB
 
-1. Extraia moviebox-private-cloud-v1.0.zip.
+1. Extraia moviebox-private-cloud-v1.1.zip.
 2. Abra seu repositório MovieBox no GitHub.
 3. Substitua os arquivos antigos pelos arquivos desta pasta.
 4. Não envie seu arquivo .env com token pessoal.
