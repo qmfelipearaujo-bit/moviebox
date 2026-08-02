@@ -65,6 +65,14 @@ public class MovieNativePlugin extends Plugin {
   }
 
   @PluginMethod
+  public void ping(PluginCall call) {
+    JSObject ret = new JSObject();
+    ret.put("ok", true);
+    ret.put("version", "1.6.1");
+    call.resolve(ret);
+  }
+
+  @PluginMethod
   public void setPlayerMode(PluginCall call) {
     boolean active = call.getBoolean("active", false);
     MainActivity activity = movieActivity();
@@ -102,16 +110,18 @@ public class MovieNativePlugin extends Plugin {
   @PluginMethod
   public void startDownload(PluginCall call) {
     String source = call.getString("url");
-    String fileName = call.getString("fileName", "moviebox-video.mp4");
+    String fileName = call.getString("fileName", "media-box-video.mp4");
     if (source == null || source.trim().isEmpty()) { call.reject("URL ausente"); return; }
     if (!(source.startsWith("https://") || source.startsWith("http://"))) { call.reject("Somente URL HTTP/HTTPS é suportada"); return; }
 
     try {
       File base = getContext().getExternalFilesDir(Environment.DIRECTORY_MOVIES);
       if (base == null) { call.reject("Armazenamento indisponível"); return; }
-      File dir = new File(base, "MovieBox");
+      File dir = new File(base, "MediaBox");
       if (!dir.exists() && !dir.mkdirs()) { call.reject("Não foi possível criar a pasta de downloads"); return; }
-      File target = new File(dir, fileName.replaceAll("[\\\\/:*?\"<>|]", "-"));
+      String safeFileName = fileName.replaceAll("[^A-Za-z0-9._-]", "-");
+      if (safeFileName.trim().isEmpty()) safeFileName = "media-box-video.mp4";
+      File target = new File(dir, safeFileName);
       if (target.exists()) target.delete();
 
       long id = NEXT_ID.incrementAndGet();
@@ -373,6 +383,7 @@ public class MainActivity extends BridgeActivity {
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
+    // Plugins locais do Capacitor devem ser registrados antes de super.onCreate().
     registerPlugin(MovieNativePlugin.class);
     super.onCreate(savedInstanceState);
 
@@ -441,4 +452,4 @@ public class MainActivity extends BridgeActivity {
 `;
 fs.writeFileSync(path.join(pkgDir, 'MainActivity.java'), main)
 
-console.log('Media Box v1.5: downloader cancelável, modo imersivo e filtro nativo de anúncios instalados.')
+console.log('Media Box v1.6.1: bridge nativa corrigida, downloader cancelável, modo imersivo e filtro nativo de anúncios instalados.')
