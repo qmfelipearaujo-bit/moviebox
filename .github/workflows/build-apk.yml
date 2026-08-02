@@ -1,4 +1,4 @@
-name: Gerar APK Android
+name: Gerar APK Android - Media Box
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ jobs:
       - name: Baixar projeto
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
+      - name: Configurar Node.js 22
         uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -29,35 +29,47 @@ jobs:
       - name: Configurar Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Instalar SDK Android 36
+      - name: Instalar Android SDK 36
         run: |
           yes | sdkmanager --licenses >/dev/null || true
           sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
-      - name: Instalar dependencias
+      - name: Instalar dependências
         run: npm install --no-audit --no-fund
 
-      - name: Compilar aplicativo
+      - name: Compilar interface
         run: npm run build
 
-      - name: Criar Android
+      - name: Criar projeto Android
         run: npx cap add android
 
-      - name: Sincronizar Android
+      - name: Instalar recursos nativos do Media Box
+        run: node scripts-install-native-android.mjs
+
+      - name: Verificar bridge nativa do Media Box
+        run: |
+          test -f android/app/src/main/java/com/moviebox/personal/MovieNativePlugin.java
+          test -f android/app/src/main/java/com/moviebox/personal/MainActivity.java
+          grep -q 'registerPlugin(MovieNativePlugin.class)' android/app/src/main/java/com/moviebox/personal/MainActivity.java
+          grep -q '@CapacitorPlugin(name = "MovieNative")' android/app/src/main/java/com/moviebox/personal/MovieNativePlugin.java
+          echo 'Bridge nativa MovieNative confirmada no projeto Android.'
+
+      - name: Sincronizar Capacitor
         run: npx cap sync android
 
-      - name: Gerar APK
+      - name: Gerar APK Debug
         run: |
           chmod +x android/gradlew
           cd android
           ./gradlew assembleDebug --no-daemon
 
-      - name: Copiar APK
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk MovieBox-Private-debug.apk
+      - name: Preparar APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk Media-Box-debug.apk
 
-      - name: Disponibilizar APK
+      - name: Enviar APK
         uses: actions/upload-artifact@v4
         with:
-          name: MovieBox-Private-APK
-          path: MovieBox-Private-debug.apk
+          name: Media-Box-APK
+          path: Media-Box-debug.apk
+          if-no-files-found: error
           retention-days: 30
