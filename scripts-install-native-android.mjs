@@ -444,7 +444,7 @@ public class MainActivity extends BridgeActivity {
   }
 
   @Override
-  protected void onResume() {
+  public void onResume() {
     super.onResume();
     if (movieBoxPlayerMode || movieBoxImmersive) applyMovieBoxImmersive();
   }
@@ -452,4 +452,4 @@ public class MainActivity extends BridgeActivity {
 `;
 fs.writeFileSync(path.join(pkgDir, 'MainActivity.java'), main)
 
-console.log('Media Box v1.6.1: bridge nativa corrigida, downloader cancelável, modo imersivo e filtro nativo de anúncios instalados.')
+console.log('Media Box v1.6.2: bridge nativa corrigida, downloader cancelável, modo imersivo e filtro nativo de anúncios instalados.')
