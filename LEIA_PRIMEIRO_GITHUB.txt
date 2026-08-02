@@ -1,0 +1,28 @@
+MOVIEBOX PRIVATE - GERAR APK NA NUVEM (SEM ANDROID STUDIO)
+==========================================================
+
+Esta versão NÃO precisa colocar o token TMDB no código.
+Na primeira abertura do APK, o próprio aplicativo pedirá o token e salvará somente no aparelho.
+
+PASSOS:
+1) Crie uma conta gratuita no GitHub, se ainda não tiver.
+2) Crie um repositório novo. Pode ser PUBLIC ou PRIVATE.
+3) Extraia este ZIP no computador.
+4) No GitHub: Add file > Upload files.
+5) Arraste TODO o conteúdo desta pasta para o repositório, incluindo a pasta .github.
+6) Clique em Commit changes.
+7) Abra a aba Actions do repositório.
+8) Clique em "Gerar APK Android".
+9) Clique em "Run workflow" e depois no botão verde "Run workflow".
+10) Aguarde o build ficar verde.
+11) Abra o build concluído e, em Artifacts, baixe "MovieBox-Private-APK".
+
+O GitHub entregará um ZIP. Dentro estará:
+MovieBox-Private-debug.apk
+
+Depois é só copiar o APK para o Android e instalar.
+
+IMPORTANTE:
+- Não envie seu token TMDB ao GitHub.
+- O token será solicitado dentro do app na primeira execução.
+- O workflow é manual: ele só compila quando você clicar em Run workflow.

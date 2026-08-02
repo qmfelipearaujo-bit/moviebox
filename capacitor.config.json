@@ -1,0 +1,8 @@
+{
+  "appId": "com.moviebox.personal",
+  "appName": "MovieBox Private",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}
