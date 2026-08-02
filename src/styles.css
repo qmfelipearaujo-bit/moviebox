@@ -279,3 +279,19 @@ button { color: inherit; }
   .metadata-poster { width:42px; }
   .custom-source-card-v11 .source-poster { width:54px; height:81px; }
 }
+
+/* v1.2 · PWA para iPhone */
+.pwa-install-card { position:fixed; left:50%; bottom:calc(74px + env(safe-area-inset-bottom)); z-index:45; transform:translateX(-50%); width:min(720px,calc(100% - 24px)); display:grid; grid-template-columns:auto 1fr auto; gap:13px; align-items:center; padding:13px 14px; border:1px solid #ffffff1f; border-radius:16px; background:#0b0d13f2; box-shadow:0 18px 60px #000a; backdrop-filter:blur(18px); }
+.pwa-install-icon { width:46px; height:46px; display:grid; place-items:center; border-radius:12px; background:#e509141a; font-size:24px; }
+.pwa-install-copy { min-width:0; display:grid; gap:3px; }
+.pwa-install-copy strong { font-size:14px; }
+.pwa-install-copy p { margin:0; color:#a0a5b2; font-size:11px; line-height:1.5; }
+.pwa-install-copy b { color:#fff; }
+.pwa-install-close { align-self:start; }
+.web-download-note { margin-top:12px; border-color:#4b9eff33; background:linear-gradient(135deg,#10192a,#0d1018); }
+@media (min-width:761px) { .pwa-install-card { bottom:24px; } }
+@media (max-width:520px) {
+  .pwa-install-card { grid-template-columns:auto 1fr auto; padding:11px; }
+  .pwa-install-icon { width:40px; height:40px; font-size:21px; }
+  .pwa-install-copy p { font-size:10px; }
+}

@@ -1,14 +1,14 @@
-MOVIEBOX PRIVATE v1.1 - ATUALIZAÇÃO NO GITHUB
+MOVIEBOX PRIVATE v1.2 - ATUALIZAÇÃO NO GITHUB
 
-1. Extraia moviebox-private-cloud-v1.1.zip.
-2. Abra seu repositório MovieBox no GitHub.
-3. Substitua os arquivos antigos pelos arquivos desta pasta.
-4. Não envie seu arquivo .env com token pessoal.
-5. Confirme as alterações (Commit changes).
-6. Abra Actions > Gerar APK Android.
-7. Clique em Run workflow.
-8. Aguarde Success.
-9. Na página Summary, baixe o artifact MovieBox-Private-APK.
-10. Extraia e instale MovieBox-Private-debug.apk.
+1. Extraia moviebox-private-cloud-v1.2.zip.
+2. Envie/substitua os arquivos no mesmo repositório GitHub do MovieBox.
+3. Confirme que a pasta .github/workflows contém:
+   - build-apk.yml
+   - deploy-pages.yml
+4. Para Android: Actions → Gerar APK Android → Run workflow.
+5. Para iPhone: Settings → Pages → Source: GitHub Actions (uma vez).
+6. Depois: Actions → Publicar MovieBox para iPhone → Run workflow.
+7. Abra a URL publicada no Safari do iPhone e use:
+   Compartilhar → Adicionar à Tela de Início → Abrir como App da Web.
 
-O appId continua com.moviebox.personal.
+O token TMDB continua cadastrado no próprio aparelho e não precisa ir para o GitHub.

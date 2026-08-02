@@ -10,6 +10,7 @@ import PlayerModal from './components/PlayerModal'
 import SearchView from './components/SearchView'
 import LibraryView from './components/LibraryView'
 import DownloadsView from './components/DownloadsView'
+import PwaInstallHint from './components/PwaInstallHint'
 
 function Header({ view, setView }) {
   return (
@@ -105,6 +106,7 @@ export default function App() {
   return (
     <div className="app-shell">
       <Header view={view} setView={setView} />
+      <PwaInstallHint />
       {view === 'home' && (
         <main className="page home-page">
           {!hasTmdbToken() ? <TokenSetup /> : catalogError ? <div className="setup-card"><div className="setup-icon">⚠️</div><div><span className="eyebrow">TMDB</span><h2>Não foi possível carregar o catálogo</h2><p>Verifique sua internet e o token do TMDB. Se o token estiver incorreto, cadastre-o novamente.</p><button className="secondary" onClick={resetToken}>Alterar token</button></div></div> : loading ? <div className="full-loader"><span className="loader" /><p>Carregando catálogo…</p></div> : <>

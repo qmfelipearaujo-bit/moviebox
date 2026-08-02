@@ -1,29 +1,55 @@
-# MovieBox Private v1.1
+# MovieBox Private v1.2
 
-Aplicativo Android privado de catálogo e reprodução, com TMDB para metadados, player incorporado, biblioteca offline e laboratório de links.
+Aplicativo pessoal de filmes e séries com duas formas de instalação:
 
-## v1.1 — Auto preencher mídia por URL
+- **Android:** APK via GitHub Actions.
+- **iPhone:** PWA/Web App via GitHub Pages, sem App Store e sem Mac.
 
-Na aba **Offline → Meus Links**, cole uma URL de vídeo, `.torrent` ou magnet. O MovieBox tenta:
+## Principais recursos
 
-1. extrair um título do nome do arquivo/link;
-2. reconhecer ano e, em séries, temporada/episódio;
-3. pesquisar o título no TMDB;
-4. preencher título, poster, ano, tipo e sinopse;
-5. mostrar outras correspondências quando houver dúvida.
+- Catálogo e pesquisa via TMDB.
+- Player incorporado com proteção contra pop-ups/redirecionamentos.
+- Filmes e séries, temporadas e episódios.
+- Favoritos e histórico locais.
+- Internet Archive, Open Movies e Meus Links.
+- Busca automática de capa/metadados no TMDB para links cadastrados.
+- Downloads nativos no Android.
+- Encaminhamento de downloads diretos para Safari/Arquivos no iPhone.
+- Manifesto PWA, ícone e modo standalone no iOS.
+- Service Worker para cache do shell/interface.
 
-Exemplos que o analisador reconhece bem:
+## Token TMDB
 
-- `The.Matrix.1999.1080p.mp4`
-- `Breaking.Bad.S01E01.720p.webm`
-- magnet com parâmetro `dn=` contendo o nome da mídia.
+O token não precisa ficar no GitHub. Na primeira execução, o MovieBox pede o
+**API Read Access Token** e o salva no armazenamento local do dispositivo.
 
-Se a URL for genérica, como `video123.mp4`, basta digitar o título correto no campo de pesquisa TMDB.
+## Android
 
-## Gerar APK no GitHub
+Use o workflow:
 
-Use o workflow já incluído em `.github/workflows/build-apk.yml`:
+`Actions → Gerar APK Android → Run workflow`
 
-**Actions → Gerar APK Android → Run workflow**
+O APK será disponibilizado em Artifacts.
 
-Depois de `Success`, baixe o artifact **MovieBox-Private-APK**.
+## iPhone (GitHub Pages)
+
+Leia `IPHONE_PWA.txt`.
+
+Resumo:
+
+1. Em `Settings → Pages`, selecione **GitHub Actions** como Source.
+2. Execute `Actions → Publicar MovieBox para iPhone → Run workflow`.
+3. Abra a URL publicada no Safari do iPhone.
+4. `Compartilhar → Adicionar à Tela de Início → Abrir como App da Web`.
+
+### GitHub Free
+
+GitHub Pages é gratuito para repositórios públicos em contas GitHub Free. Como
+o token TMDB é cadastrado no aparelho, ele não precisa ser publicado junto com
+o código.
+
+## Observação sobre offline no iPhone
+
+O PWA consegue manter a interface em cache, mas arquivos grandes não usam o
+mesmo armazenamento nativo do APK. Ao baixar um vídeo direto no iPhone, o Safari
+é usado para salvar o arquivo em Downloads/Arquivos.

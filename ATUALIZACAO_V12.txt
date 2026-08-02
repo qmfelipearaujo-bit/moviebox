@@ -1,0 +1,14 @@
+MOVIEBOX PRIVATE v1.2
+=====================
+
+NOVO: PWA GRATUITA PARA IPHONE
+- Manifesto instalável.
+- Ícones 192/512 e Apple Touch Icon.
+- Modo standalone no iPhone.
+- Service Worker e cache da interface.
+- Workflow GitHub Pages (.github/workflows/deploy-pages.yml).
+- Cartão de instrução de instalação exibido automaticamente no iPhone.
+- Downloads web: arquivos diretos são encaminhados ao Safari/Arquivos.
+- APK Android continua disponível pelo workflow build-apk.yml.
+
+O token do TMDB continua sendo salvo no aparelho/navegador, não no GitHub.

@@ -244,6 +244,7 @@ export default function DownloadsView() {
   const [archiveLoading, setArchiveLoading] = useState(false)
   const [customSources, setCustomSources] = useState(getCustomSources())
   const nativeSupported = isNativeOfflineSupported()
+  const webMode = !nativeSupported
 
   const reloadDownloads = async () => {
     const current = nativeSupported ? await reconcileOfflineDownloads() : getDownloads()
@@ -286,7 +287,19 @@ export default function DownloadsView() {
   }
 
   const download = async (item, media, option) => {
-    if (!nativeSupported) { setMessage('O download para armazenamento interno funciona no APK Android.'); return }
+    if (!nativeSupported) {
+      if (!option?.url) { setMessage('Nenhum arquivo direto foi encontrado para esta opção.'); return }
+      const link = document.createElement('a')
+      link.href = option.url
+      link.target = '_blank'
+      link.rel = 'noopener noreferrer'
+      link.download = ''
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      setMessage('No iPhone, o Safari abrirá o arquivo ou o gerenciador de download. Se o vídeo abrir em vez de baixar, use Compartilhar → Salvar em Arquivos.')
+      return
+    }
     setMessage(''); setTasks((t) => ({ ...t, [item.id]: { status: 'downloading', percent: 0, bytes: 0 } }))
     try {
       await downloadOfflineMovie(item, media, option, (progress) => setTasks((t) => ({ ...t, [item.id]: { status: 'downloading', ...progress } })))
@@ -307,10 +320,10 @@ export default function DownloadsView() {
 
   return (
     <main className="page padded-page offline-page">
-      <div className="page-head"><div><span className="eyebrow">MODO OFFLINE · v1.1</span><h1>Downloads e fontes</h1><p className="page-subtitle">Internet Archive, Open Movies e uma área livre para você testar as fontes que escolher.</p></div></div>
+      <div className="page-head"><div><span className="eyebrow">MODO OFFLINE · v1.2</span><h1>Downloads e fontes</h1><p className="page-subtitle">Internet Archive, Open Movies e uma área livre para você testar as fontes que escolher.</p></div></div>
 
       <div className="offline-note legal-note"><strong>O MovieBox não bloqueia downloads com base no campo de licença.</strong><p>Quando a fonte fornece informações de direitos/licença, o aplicativo apenas as exibe. A decisão de usar uma fonte fica com o proprietário do aplicativo.</p></div>
-      {!nativeSupported && <div className="offline-note warning-note"><strong>Abra no APK Android para baixar.</strong><p>No navegador é possível pesquisar e cadastrar fontes, mas o armazenamento offline nativo funciona dentro do aplicativo instalado.</p></div>}
+      {webMode && <div className="offline-note web-download-note"><strong>iPhone / versão web.</strong><p>O MovieBox pode encaminhar arquivos diretos ao Safari. Eles ficam nos Downloads/Arquivos do iPhone, fora do armazenamento interno do MovieBox. Para downloads gerenciados dentro do app, continue usando o APK Android.</p></div>}
       {message && <div className="offline-message">{message}</div>}
 
       <div className="tabs offline-tabs four-tabs">
