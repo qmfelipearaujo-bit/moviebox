@@ -89,8 +89,19 @@ button { color: inherit; }
 .episode p { margin:4px 0 0; color:#858b9a; font-size:12px; display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
 .player-modal { padding:0; background:#000; }
 .player-shell { width:100vw; height:100vh; display:flex; flex-direction:column; background:black; }
-.player-topbar { height:58px; display:flex; align-items:center; justify-content:space-between; padding:0 16px; background:#07080d; }
-.player-shell iframe { width:100%; flex:1; background:black; }
+.player-topbar { min-height:58px; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 16px; background:#07080d; }
+.player-frame-wrap { flex:1; min-height:0; display:flex; background:#000; }
+.player-shell iframe { width:100%; height:100%; flex:1; background:black; }
+.player-actions { display:flex; align-items:center; gap:10px; }
+.player-protection { border:1px solid rgba(255,255,255,.16); border-radius:999px; padding:8px 11px; background:#141722; color:#f5f7fb; font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; }
+.player-protection.is-on { background:#10251a; border-color:#285e3d; }
+.player-protection.is-off { background:#39240c; border-color:#815719; }
+.player-security-note { padding:7px 14px; text-align:center; font-size:11px; line-height:1.35; color:#aeb6c5; background:#07080d; border-top:1px solid rgba(255,255,255,.06); }
+@media (max-width: 640px) {
+  .player-topbar strong { max-width:42vw; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .player-protection { font-size:11px; padding:7px 9px; }
+  .player-security-note { font-size:10px; }
+}
 .offline-note,.setup-card { border:1px solid var(--line); background:linear-gradient(135deg,#141721,#0d0f16); border-radius:18px; padding:24px; color:#b5bac8; line-height:1.6; }
 .offline-note strong,.setup-card h2 { color:white; }
 .setup-card { margin:120px auto 40px; max-width:900px; display:grid; grid-template-columns:auto 1fr; gap:22px; }

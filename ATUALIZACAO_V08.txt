@@ -1,0 +1,17 @@
+MOVIEBOX PRIVATE v0.8 - PROTECAO DO PLAYER
+
+O que mudou:
+- Player agora abre em iframe sandbox por padrao.
+- Bloqueia window.open/pop-ups porque allow-popups NAO e concedido.
+- Bloqueia navegacao da pagina principal porque allow-top-navigation NAO e concedido.
+- Referrer do app nao e enviado ao player (no-referrer).
+- Botao "Protecao ativa" aparece no topo do player.
+- Se um player especifico nao iniciar, toque em "Protecao ativa" para entrar temporariamente em "Compatibilidade". Nesse modo a protecao e reduzida e propagandas podem voltar a abrir.
+
+IMPORTANTE:
+Esta protecao impede principalmente redirecionamentos, novas abas e pop-ups. Ela nao consegue remover com garantia banners/desenhos que o proprio site do player renderiza dentro do video, pois o iframe pertence a outro dominio.
+
+Para gerar:
+1. Envie/substitua estes arquivos no repositorio GitHub.
+2. Actions > Gerar APK Android > Run workflow.
+3. Depois de Success, baixe Artifacts > MovieBox-Private-APK.
