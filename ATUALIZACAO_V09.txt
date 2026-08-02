@@ -1,0 +1,22 @@
+MOVIEBOX PRIVATE v0.9
+
+NOVIDADES
+- Internet Archive dinâmico na aba Offline.
+- Busca por títulos/assuntos na coleção Open Source Movies.
+- Verificação de licença aberta/domínio público antes de habilitar download automático.
+- Detecção de MP4/WebM e opções de qualidade/tamanho.
+- Exibe .torrent oficial do Internet Archive quando o item oferece esse arquivo.
+- Nova aba "Meus Links" para testar URLs diretas, arquivos .torrent e magnet links legais.
+- URLs diretas HTTP/HTTPS podem ser baixadas para o armazenamento privado do APK.
+- Magnet/.torrent são encaminhados ao cliente torrent do aparelho; o MovieBox não inclui motor torrent embutido.
+- Mantidos player protegido contra pop-ups/redirecionamentos, TMDB, EmbedMovies e Open Movies.
+
+ATUALIZAÇÃO NO GITHUB
+1. Extraia o ZIP completo v0.9.
+2. Substitua os arquivos do repositório pelos arquivos da v0.9.
+3. Commit changes.
+4. Actions > Gerar APK Android > Run workflow.
+5. Ao terminar em verde, baixe Artifacts > MovieBox-Private-APK.
+6. Instale o APK por cima da versão atual.
+
+O package Android continua com o mesmo identificador: com.moviebox.personal

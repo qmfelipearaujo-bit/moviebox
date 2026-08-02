@@ -201,3 +201,41 @@ button { color: inherit; }
   .downloaded-actions { grid-column:1/-1; }
   .downloaded-actions .primary { flex:1; }
 }
+
+/* v0.9 · Internet Archive + laboratório de fontes legais */
+.four-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+.archive-search { margin-top:18px; display:grid; grid-template-columns:1fr auto; gap:10px; }
+.archive-search input, .custom-source-form input, .custom-source-form textarea { width:100%; min-width:0; color:#fff; background:#0b0d13; border:1px solid var(--line); border-radius:10px; padding:12px 13px; outline:none; }
+.archive-search input:focus, .custom-source-form input:focus, .custom-source-form textarea:focus { border-color:#ffffff3a; }
+.archive-hint { margin:10px 0 4px; color:#777d8d; font-size:12px; line-height:1.55; }
+.compact-loader { min-height:260px; }
+.archive-card .offline-card-copy p { min-height:74px; }
+.torrent-line { margin-top:12px; padding-top:12px; border-top:1px solid var(--line); display:flex; align-items:center; flex-wrap:wrap; gap:9px; color:#8f95a5; font-size:12px; }
+.torrent-line span { margin-right:auto; }
+.custom-source-wrap { margin-top:18px; display:grid; gap:18px; }
+.custom-source-form { border:1px solid var(--line); background:#10121a; border-radius:18px; padding:18px; display:grid; gap:13px; }
+.custom-source-form h2 { margin:6px 0 8px; font-size:26px; }
+.custom-source-form p { margin:0; color:#9197a7; line-height:1.55; }
+.custom-source-form label { display:grid; gap:7px; color:#b9beca; font-size:12px; font-weight:800; }
+.custom-source-form textarea { resize:vertical; min-height:78px; }
+.form-two { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.custom-source-form .primary { justify-self:start; }
+.custom-source-list { display:grid; gap:12px; }
+.custom-source-card { display:grid; grid-template-columns:66px minmax(0,1fr) auto; gap:15px; align-items:center; padding:14px; border:1px solid var(--line); background:#10121a; border-radius:16px; }
+.custom-source-icon { width:66px; height:66px; border-radius:14px; display:grid; place-items:center; background:#191c26; font-size:30px; }
+.custom-source-info { min-width:0; }
+.custom-source-info h3 { margin:5px 0 6px; font-size:20px; }
+.custom-source-info small { color:#747a89; }
+.source-url { margin:0 0 7px; color:#9399a8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:12px; }
+.custom-source-actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:8px; max-width:390px; }
+.text-btn.danger { color:#ff7d86; }
+@media (max-width:760px) {
+  .four-tabs { grid-template-columns:1fr 1fr; }
+  .archive-search { grid-template-columns:1fr; }
+  .archive-search .primary { width:100%; }
+  .form-two { grid-template-columns:1fr; }
+  .custom-source-card { grid-template-columns:54px 1fr; align-items:start; }
+  .custom-source-icon { width:54px; height:54px; }
+  .custom-source-actions { grid-column:1/-1; max-width:none; justify-content:stretch; }
+  .custom-source-actions .primary,.custom-source-actions .secondary,.custom-source-actions .link-button { flex:1; }
+}

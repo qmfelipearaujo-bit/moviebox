@@ -1,38 +1,34 @@
-# MovieBox Private v0.7
+# MovieBox Private v0.9
 
-Aplicativo Android privado em React + Capacitor.
+Aplicativo Android/PWA pessoal para estudo de catálogo, streaming incorporado e downloads offline de fontes autorizadas.
 
-## Novidade v0.7 — filmes para baixar e assistir offline
+## Recursos
 
-A área **Offline** agora contém uma seleção curada de Blender Open Movies hospedados no Wikimedia Commons e publicados com licenças Creative Commons que permitem compartilhamento/download com atribuição.
+- TMDB para catálogo, pesquisa, capas, sinopses, filmes e séries.
+- Player EmbedMovies com sandbox anti-pop-up/redirecionamento.
+- Favoritos e histórico local.
+- Downloads offline nativos com Capacitor File Transfer + Filesystem.
+- Catálogo curado de Blender Open Movies via Wikimedia Commons.
+- Pesquisa dinâmica no Internet Archive (Open Source Movies), filtrando itens com licença aberta/domínio público explícita nos metadados.
+- Detecção automática de MP4/WebM e, quando disponível, do arquivo `.torrent` oficial do item no Internet Archive.
+- Aba **Meus Links** para testar URL direta de mídia, `.torrent` ou magnet link que você tenha autorização para usar.
+- Para magnet/torrent, o MovieBox encaminha o link ao cliente torrent instalado; não há engine BitTorrent embutida.
 
-Incluídos inicialmente:
-- Big Buck Bunny
-- Sintel
-- Tears of Steel
-- Spring
-- Sprite Fright
+## Token TMDB
 
-O app consulta o Wikimedia Commons em tempo real para obter thumbnail, licença e transcodes de vídeo disponíveis (preferencialmente 360p/480p/720p/1080p). No APK Android, o download é feito pelo plugin nativo `@capacitor/file-transfer` para o armazenamento privado do aplicativo e pode ser reproduzido sem internet.
-
-**O download offline não extrai conteúdo do EmbedMovies.** O EmbedMovies continua separado e serve somente para streaming online.
-
-## TMDB
-
-O token TMDB pode ser informado dentro do próprio aplicativo na primeira abertura. Não é necessário publicar seu token no GitHub.
+Na primeira abertura do app, cole o `API Read Access Token` do TMDB. O token fica salvo localmente no aparelho.
 
 ## Gerar APK no GitHub Actions
 
-1. Envie o conteúdo desta pasta para o repositório GitHub.
-2. Confirme que existe `.github/workflows/build-apk.yml`.
-3. Vá em **Actions → Gerar APK Android → Run workflow**.
-4. Após `Success`, abra o resumo da execução e baixe o artifact **MovieBox-Private-APK**.
-5. Extraia o ZIP e instale `MovieBox-Private-debug.apk` no Android.
+O workflow `.github/workflows/build-apk.yml` já está incluído.
 
-## Armazenamento offline
+1. Envie o conteúdo deste projeto ao repositório GitHub.
+2. Abra **Actions > Gerar APK Android**.
+3. Clique **Run workflow**.
+4. Ao finalizar com sucesso, baixe **Artifacts > MovieBox-Private-APK**.
 
-Os filmes baixados ficam em `Directory.Data`, área privada do aplicativo. Excluir o aplicativo pode remover esses arquivos. A opção **Excluir** na aba Meus downloads apaga o vídeo e seu registro local.
+O APK gerado usa o identificador Android `com.moviebox.personal`, permitindo atualização por cima das versões anteriores assinadas pelo mesmo workflow/debug key de cada build local do runner. Em alguns aparelhos, APKs debug gerados em runners diferentes podem exigir desinstalar a versão anterior por causa da assinatura de debug.
 
-## Licenças
+## Uso responsável
 
-A tela Offline mostra a licença e a atribuição de cada obra e inclui um botão **Fonte e licença** para abrir a página correspondente do Wikimedia Commons. O catálogo é propositalmente curado; ele não transforma todo o Wikimedia Commons em uma biblioteca indiscriminada de downloads.
+A busca automática do Internet Archive só habilita download quando encontra metadados de licença aberta/domínio público suficientemente claros. A aba **Meus Links** não valida direitos externos: use somente URLs/magnets que você tenha autorização para baixar.
