@@ -1,4 +1,4 @@
-MOVIEBOX v1.4 - LOGIN E SINCRONIZACAO COM SUPABASE
+MEDIA BOX v1.5 - LOGIN E SINCRONIZACAO COM SUPABASE
 ==================================================
 
 1. Crie um projeto gratuito em https://supabase.com
@@ -28,7 +28,7 @@ drop policy if exists "moviebox_update_own" on public.moviebox_library;
 create policy "moviebox_update_own" on public.moviebox_library
 for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
-4. Abra MovieBox > Conta e cole Project URL e chave publica.
+4. Abra Media Box > Conta e cole Project URL e chave publica.
 5. Crie uma conta ou entre.
 
 OBSERVACOES

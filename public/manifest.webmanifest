@@ -1,7 +1,7 @@
 {
-  "name": "MovieBox Private",
-  "short_name": "MovieBox",
-  "description": "Catálogo pessoal de filmes e séries.",
+  "name": "Media Box",
+  "short_name": "Media Box",
+  "description": "Catálogo pessoal de filmes, séries, TV, rádios e mídia offline.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

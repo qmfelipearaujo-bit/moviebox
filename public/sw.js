@@ -1,4 +1,4 @@
-const CACHE_NAME = 'moviebox-shell-v1.4'
+const CACHE_NAME = 'media-box-shell-v1.5'
 const APP_SHELL = [
   './',
   './index.html',

@@ -1,4 +1,4 @@
-import { Capacitor, registerPlugin } from '@capacitor/core'
+import { Capacitor, registerPlugin, SystemBars } from '@capacitor/core'
 
 const MovieNative = registerPlugin('MovieNative')
 
@@ -6,14 +6,27 @@ export function hasNativeBridge() {
   return Capacitor.getPlatform() === 'android'
 }
 
+export async function setNativePlayerMode(active) {
+  if (!hasNativeBridge()) return false
+  try { await MovieNative.setPlayerMode({ active: !!active }); return true } catch { return false }
+}
+
 export async function hideSystemBars() {
   if (!hasNativeBridge()) return false
-  try { await MovieNative.hideSystemBars(); return true } catch { return false }
+  const results = await Promise.allSettled([
+    SystemBars.hide(),
+    MovieNative.hideSystemBars(),
+  ])
+  return results.some((result) => result.status === 'fulfilled')
 }
 
 export async function showSystemBars() {
   if (!hasNativeBridge()) return false
-  try { await MovieNative.showSystemBars(); return true } catch { return false }
+  const results = await Promise.allSettled([
+    SystemBars.show(),
+    MovieNative.showSystemBars(),
+  ])
+  return results.some((result) => result.status === 'fulfilled')
 }
 
 export async function startNativeDownload({ url, fileName, headers = {} }) {
@@ -28,5 +41,10 @@ export async function getNativeDownloadStatus(id) {
 
 export async function cancelNativeDownload(id) {
   if (!hasNativeBridge()) return false
-  try { await MovieNative.cancelDownload({ id: Number(id) }); return true } catch { return false }
+  try {
+    const result = await MovieNative.cancelDownload({ id: Number(id) })
+    return result?.cancelled !== false
+  } catch {
+    return false
+  }
 }

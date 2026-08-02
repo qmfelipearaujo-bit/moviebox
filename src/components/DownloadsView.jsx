@@ -14,7 +14,7 @@ function DownloadProgress({ task, formatBytes = commonsFormatBytes, onCancel }) 
       <div className="download-progress-line"><span>Baixando {task.percent == null ? '' : `${task.percent}%`}</span><strong>{task.bytes ? formatBytes(task.bytes) : ''}{task.speedBps ? ` · ${(task.speedBps / 1024 / 1024).toFixed(1)} MB/s` : ''}</strong></div>
       <div className="download-progress"><span style={{ width: `${task.percent || 4}%` }} /></div>
       <div className="download-progress-actions">
-        <button className="secondary cancel-download" disabled={!task.cancel} onClick={onCancel}>{task.cancel ? 'Cancelar download' : 'Preparando cancelamento…'}</button>
+        <button className="secondary cancel-download" onClick={onCancel}>{task.cancel ? 'Cancelar download' : 'Cancelar'}</button>
       </div>
     </div>
   )
@@ -191,7 +191,7 @@ function CustomSources({ sources, onAdd, onUpdate, onRemove, downloads, tasks, o
   return (
     <div className="custom-source-wrap">
       <form className="custom-source-form" onSubmit={submit}>
-        <div><span className="eyebrow">LABORATÓRIO DE LINKS · AUTO CAPA</span><h2>Adicionar sua própria fonte</h2><p>Cole a URL. O MovieBox tenta reconhecer o nome no link e consulta o TMDB para preencher título, capa, ano e tipo automaticamente. Você pode corrigir o resultado antes de salvar.</p></div>
+        <div><span className="eyebrow">LABORATÓRIO DE LINKS · AUTO CAPA</span><h2>Adicionar sua própria fonte</h2><p>Cole a URL. O Media Box tenta reconhecer o nome no link e consulta o TMDB para preencher título, capa, ano e tipo automaticamente. Você pode corrigir o resultado antes de salvar.</p></div>
         <label>URL / Magnet<textarea value={form.url} onChange={(e) => { setForm({ ...form, url: e.target.value }); setLookup(null) }} placeholder="https://servidor/The.Matrix.1999.1080p.mp4  ou  magnet:?xt=..." rows="3" required /></label>
 
         <div className="auto-meta-toolbar">
@@ -327,7 +327,7 @@ export default function DownloadsView() {
 
   const cancelDownload = async (itemId) => {
     const cancel = tasks[itemId]?.cancel
-    if (!cancel) return
+    if (!cancel) { setMessage('O download ainda está iniciando. Tente novamente em um instante.'); return }
     setMessage('Cancelando download…')
     try { await cancel() } catch {}
     setTasks((t) => ({ ...t, [itemId]: { status: 'cancelled' } }))
@@ -345,10 +345,10 @@ export default function DownloadsView() {
 
   return (
     <main className="page padded-page offline-page">
-      <div className="page-head"><div><span className="eyebrow">MODO OFFLINE · v1.4</span><h1>Downloads e fontes</h1><p className="page-subtitle">Internet Archive, Open Movies e uma área livre para você testar as fontes que escolher.</p></div></div>
+      <div className="page-head"><div><span className="eyebrow">MODO OFFLINE · v1.5</span><h1>Downloads e fontes</h1><p className="page-subtitle">Internet Archive, Open Movies e uma área livre para você testar as fontes que escolher.</p></div></div>
 
-      <div className="offline-note legal-note"><strong>O MovieBox não bloqueia downloads com base no campo de licença.</strong><p>Quando a fonte fornece informações de direitos/licença, o aplicativo apenas as exibe. A decisão de usar uma fonte fica com o proprietário do aplicativo.</p></div>
-      {webMode && <div className="offline-note web-download-note"><strong>iPhone / versão web.</strong><p>O MovieBox pode encaminhar arquivos diretos ao Safari. Eles ficam nos Downloads/Arquivos do iPhone, fora do armazenamento interno do MovieBox. Para downloads gerenciados dentro do app, continue usando o APK Android.</p></div>}
+      <div className="offline-note legal-note"><strong>O Media Box não bloqueia downloads com base no campo de licença.</strong><p>Quando a fonte fornece informações de direitos/licença, o aplicativo apenas as exibe. A decisão de usar uma fonte fica com o proprietário do aplicativo.</p></div>
+      {webMode && <div className="offline-note web-download-note"><strong>iPhone / versão web.</strong><p>O Media Box pode encaminhar arquivos diretos ao Safari. Eles ficam nos Downloads/Arquivos do iPhone, fora do armazenamento interno do Media Box. Para downloads gerenciados dentro do app, continue usando o APK Android.</p></div>}
       {message && <div className="offline-message">{message}</div>}
 
       <div className="tabs offline-tabs four-tabs">
@@ -360,7 +360,7 @@ export default function DownloadsView() {
 
       {tab === 'archive' && <>
         <form className="archive-search" onSubmit={(e) => { e.preventDefault(); runArchiveSearch() }}><input value={archiveQuery} onChange={(e) => setArchiveQuery(e.target.value)} placeholder="Pesquisar título, assunto..." /><button className="primary" type="submit">Pesquisar</button></form>
-        <div className="archive-hint">Resultados de vídeos do Internet Archive. O MovieBox mostra os metadados de direitos quando existirem, mas não exige licença aberta para listar os arquivos disponíveis.</div>
+        <div className="archive-hint">Resultados de vídeos do Internet Archive. O Media Box mostra os metadados de direitos quando existirem, mas não exige licença aberta para listar os arquivos disponíveis.</div>
         {archiveLoading ? <div className="full-loader compact-loader"><span className="loader" /><p>Pesquisando Internet Archive…</p></div> : <div className="offline-grid">{archiveItems.map((item) => <ArchiveCard key={item.id} item={item} resolved={archiveResolved[item.id]} downloaded={downloads.find((d) => d.downloadId === item.id)} task={tasks[item.id]} onResolve={resolveArchive} onDownload={download} onCancel={cancelDownload} onPlay={play} onDelete={remove} onMessage={setMessage} />)}</div>}
       </>}
 

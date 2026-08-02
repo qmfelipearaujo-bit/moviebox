@@ -9,6 +9,6 @@ CORRECAO PRINCIPAL
 
 COMO ATUALIZAR
 1. Substitua os arquivos desta versao no repositorio GitHub.
-2. Rode Actions > Publicar MovieBox para iPhone.
-3. Quando concluir com Success, feche e reabra o MovieBox no iPhone.
+2. Rode Actions > Publicar Media Box para iPhone.
+3. Quando concluir com Success, feche e reabra o Media Box no iPhone.
 4. Se o iPhone continuar mostrando a versao antiga, abra o endereco no Safari e recarregue uma vez; depois abra novamente o icone da Tela de Inicio.

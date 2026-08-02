@@ -2,13 +2,13 @@ MOVIEBOX PRIVATE v1.2 — IPHONE / PWA
 ====================================
 
 OBJETIVO
-Publicar o mesmo MovieBox como um Web App instalável no iPhone, gratuitamente,
+Publicar o mesmo Media Box como um Web App instalável no iPhone, gratuitamente,
 sem App Store, sem Xcode e sem Mac.
 
 IMPORTANTE SOBRE O GITHUB FREE
 Para usar GitHub Pages gratuitamente com uma conta GitHub Free, o repositório
 deve ser PUBLICO. O token TMDB NÃO fica salvo no repositório: ele é digitado
-no próprio MovieBox e fica no armazenamento local do navegador/aparelho.
+no próprio Media Box e fica no armazenamento local do navegador/aparelho.
 
 PASSO 1 — ENVIAR A v1.2 PARA O GITHUB
 Substitua os arquivos do seu repositório pelos arquivos desta versão.
@@ -22,7 +22,7 @@ Settings → Pages → Build and deployment → Source → GitHub Actions
 
 PASSO 3 — PUBLICAR
 Vá em:
-Actions → Publicar MovieBox para iPhone → Run workflow → Run workflow
+Actions → Publicar Media Box para iPhone → Run workflow → Run workflow
 
 Também haverá publicação automática quando arquivos forem enviados para a
 branch main.
@@ -40,14 +40,14 @@ PASSO 5 — INSTALAR NO IPHONE
 4. Ative Abrir como App da Web.
 5. Toque em Adicionar.
 
-O MovieBox aparecerá como um ícone na Tela de Início e abrirá em modo standalone.
+O Media Box aparecerá como um ícone na Tela de Início e abrirá em modo standalone.
 
 DOWNLOADS NO IPHONE
 A versão PWA não tem o mesmo armazenamento nativo do APK Android.
-Ao tocar em baixar um arquivo direto, o MovieBox encaminha o arquivo ao Safari.
+Ao tocar em baixar um arquivo direto, o Media Box encaminha o arquivo ao Safari.
 O iPhone pode salvá-lo em Downloads/Arquivos. Se o vídeo abrir em vez de baixar,
 use Compartilhar → Salvar em Arquivos.
 
 O catálogo, TMDB, busca, favoritos, histórico, player e Meus Links funcionam na
-versão web. O cache PWA permite abrir a interface do MovieBox mesmo sem rede,
+versão web. O cache PWA permite abrir a interface do Media Box mesmo sem rede,
 mas o catálogo e streaming ainda precisam de internet.

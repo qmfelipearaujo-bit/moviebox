@@ -13,7 +13,7 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     const swUrl = new URL('./sw.js', window.location.href).href
     navigator.serviceWorker.register(swUrl).catch((error) => {
-      console.warn('MovieBox PWA: service worker não registrado.', error)
+      console.warn('Media Box PWA: service worker não registrado.', error)
     })
   })
 }

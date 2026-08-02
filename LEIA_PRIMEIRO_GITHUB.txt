@@ -12,13 +12,13 @@ PASSOS:
 5) Arraste TODO o conteúdo desta pasta para o repositório, incluindo a pasta .github.
 6) Clique em Commit changes.
 7) Abra a aba Actions do repositório.
-8) Clique em "Gerar APK Android".
+8) Clique em "Gerar APK Android - Media Box".
 9) Clique em "Run workflow" e depois no botão verde "Run workflow".
 10) Aguarde o build ficar verde.
-11) Abra o build concluído e, em Artifacts, baixe "MovieBox-Private-APK".
+11) Abra o build concluído e, em Artifacts, baixe "Media Box-Private-APK".
 
 O GitHub entregará um ZIP. Dentro estará:
-MovieBox-Private-debug.apk
+Media Box-Private-debug.apk
 
 Depois é só copiar o APK para o Android e instalar.
 

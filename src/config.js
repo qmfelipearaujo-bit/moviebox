@@ -1,4 +1,4 @@
-export const APP_NAME = 'MovieBox Private'
+export const APP_NAME = 'Media Box'
 export const TMDB_LANGUAGE = import.meta.env.VITE_TMDB_LANGUAGE || 'pt-BR'
 export const TMDB_REGION = import.meta.env.VITE_TMDB_REGION || 'BR'
 export const EMBED_BASE_URL = (import.meta.env.VITE_EMBED_BASE_URL || 'https://cdn-embed.com').replace(/\/$/, '')

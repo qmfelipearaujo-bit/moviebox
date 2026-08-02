@@ -29,11 +29,11 @@ export default function PwaInstallHint() {
   }
 
   return (
-    <aside className="pwa-install-card" aria-label="Instalar MovieBox no iPhone">
+    <aside className="pwa-install-card" aria-label="Instalar Media Box no iPhone">
       <div className="pwa-install-icon">📱</div>
       <div className="pwa-install-copy">
         <span className="eyebrow">IPHONE · INSTALAÇÃO GRATUITA</span>
-        <strong>Adicione o MovieBox à Tela de Início</strong>
+        <strong>Adicione o Media Box à Tela de Início</strong>
         <p>No Safari, toque em <b>Compartilhar</b> → <b>Adicionar à Tela de Início</b> → ative <b>Abrir como App da Web</b>.</p>
       </div>
       <button className="icon-btn pwa-install-close" onClick={dismiss} aria-label="Ocultar instrução">✕</button>

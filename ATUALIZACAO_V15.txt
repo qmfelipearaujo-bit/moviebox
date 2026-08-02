@@ -1,0 +1,19 @@
+# Media Box v1.5
+
+Esta versão consolida as correções solicitadas após os testes no Android e adota o novo nome **Media Box**.
+
+## Correções principais
+
+- **Cancelar download:** o botão passa a ser preparado imediatamente e o downloader nativo agora é controlado pelo próprio app, permitindo interromper a conexão e apagar o arquivo parcial.
+- **Tela cheia Android:** usa `SystemBars.hide()` do Capacitor 8 junto com uma camada nativa de modo imersivo; o modo é reaplicado quando o foco/orientação muda.
+- **Propagandas do player:** adiciona filtro nativo de requisições para redes de anúncios conhecidas e padrões VAST/preroll, além do sandbox já existente para pop-ups e redirecionamentos.
+- **Área segura:** cabeçalho e páginas respeitam a área da barra de status quando o app não está em modo player.
+- **Novo nome:** todos os nomes visíveis passam a ser **Media Box**.
+
+## Compatibilidade
+
+O `appId` Android continua `com.moviebox.personal` e as chaves internas de armazenamento continuam com os nomes antigos. Isso é intencional para que a v1.5 seja instalada como atualização e preserve token, favoritos, histórico e configurações locais.
+
+## Observação sobre anúncios
+
+O filtro bloqueia pop-ups, redirecionamentos e várias requisições de anúncios conhecidas. Se o próprio servidor do vídeo inserir publicidade dentro do mesmo fluxo de mídia (server-side ad insertion), o app não consegue remover esse trecho sem controlar o servidor de origem.

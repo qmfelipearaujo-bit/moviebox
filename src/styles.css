@@ -18,16 +18,16 @@ body { min-width: 320px; overflow-x: hidden; }
 button, input, select { font: inherit; }
 button { color: inherit; }
 .app-shell { min-height: 100vh; padding-bottom: env(safe-area-inset-bottom); }
-.app-header { position: fixed; z-index: 60; inset: 0 0 auto 0; height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 4.2vw; background: linear-gradient(#07080df5, #07080db5, transparent); backdrop-filter: blur(8px); }
+.app-header { position: fixed; z-index: 60; inset: 0 0 auto 0; height: calc(70px + env(safe-area-inset-top)); display: flex; align-items: center; justify-content: space-between; padding: env(safe-area-inset-top) 4.2vw 0; background: linear-gradient(#07080df5, #07080db5, transparent); backdrop-filter: blur(8px); }
 .brand { display: flex; gap: 10px; align-items: center; background: none; border: 0; font-size: 19px; font-weight: 900; cursor: pointer; }
 .brand-mark { display:grid; place-items:center; width:34px; height:34px; background:var(--accent); border-radius:8px; box-shadow:0 8px 30px #e5091445; }
 .app-header nav { display: flex; gap: 4px; }
 .app-header nav button { background: transparent; border: 0; color: #bbbfd0; padding: 9px 13px; border-radius: 9px; cursor:pointer; }
 .app-header nav button.active, .app-header nav button:hover { color:#fff; background:#ffffff0b; }
 .page { min-height: 100vh; }
-.padded-page { padding: 105px 4.2vw 100px; }
+.padded-page { padding: calc(105px + env(safe-area-inset-top)) 4.2vw 100px; }
 .home-page { padding-bottom: 90px; }
-.hero { min-height: 72vh; background-size: cover; background-position: center top; display:flex; align-items:center; padding: 100px 6vw 60px; }
+.hero { min-height: 72vh; background-size: cover; background-position: center top; display:flex; align-items:center; padding: calc(100px + env(safe-area-inset-top)) 6vw 60px; }
 .hero-copy { max-width: 680px; }
 .eyebrow { color: var(--accent2); font-weight: 900; font-size: 12px; letter-spacing: .18em; }
 .hero h1, .page-head h1 { font-size: clamp(36px, 6vw, 76px); line-height: .96; margin: 10px 0 16px; letter-spacing: -.045em; }
@@ -88,7 +88,7 @@ button { color: inherit; }
 .episode-number { width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:#242734;color:#aeb2bf;font-weight:800; }
 .episode p { margin:4px 0 0; color:#858b9a; font-size:12px; display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
 .player-modal { padding:0; background:#000; }
-.player-shell { width:100vw; height:100vh; display:flex; flex-direction:column; background:black; }
+.player-shell { width:100vw; height:100vh; height:100dvh; display:flex; flex-direction:column; background:black; overflow:hidden; }
 .player-topbar { min-height:58px; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 16px; background:#07080d; }
 .player-frame-wrap { flex:1; min-height:0; display:flex; background:#000; }
 .player-shell iframe { width:100%; height:100%; flex:1; background:black; }
@@ -120,10 +120,10 @@ button { color: inherit; }
 @keyframes spin{to{transform:rotate(360deg)}}
 .bottom-nav { display:none; }
 @media (max-width: 760px) {
-  .app-header { height:58px; padding:0 16px; background:#07080ded; }
+  .app-header { height:calc(58px + env(safe-area-inset-top)); padding:env(safe-area-inset-top) 16px 0; background:#07080ded; }
   .app-header nav { display:none; }
   .brand span:last-child { font-size:16px; }
-  .hero { min-height:68vh; padding:85px 20px 80px; background-position:62% top; align-items:flex-end; }
+  .hero { min-height:68vh; padding:calc(85px + env(safe-area-inset-top)) 20px 80px; background-position:62% top; align-items:flex-end; }
   .hero h1 { font-size:44px; }
   .hero p { font-size:14px; -webkit-line-clamp:3; }
   .rows-wrap { margin-top:-45px; }
@@ -298,7 +298,7 @@ button { color: inherit; }
   .pwa-install-copy p { font-size:10px; }
 }
 
-/* v1.4 · catálogo ampliado, ao vivo, contas e downloads canceláveis */
+/* v1.5 · Media Box: cancelamento nativo, fullscreen imersivo e filtro reforçado do player */
 .player-home-btn { display:inline-flex; align-items:center; justify-content:center; min-height:38px; padding:0 12px; border:1px solid #ffffff18; border-radius:999px; background:#11141d; color:#fff; font-weight:800; font-size:12px; text-decoration:none; cursor:pointer; white-space:nowrap; }
 .player-home-btn:hover { background:#1a1e29; }
 .download-progress-actions { display:flex; justify-content:flex-end; margin-top:10px; }

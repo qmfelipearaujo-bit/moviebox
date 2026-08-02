@@ -17,11 +17,11 @@ PRINCIPAIS MUDANCAS
 
 AUDIO DO PLAYER
 A API publica do EmbedMovies nao documenta parametro para escolher idioma/faixa de audio.
-Por isso o MovieBox nao consegue criar uma faixa em ingles quando a fonte nao a oferece.
+Por isso o Media Box nao consegue criar uma faixa em ingles quando a fonte nao a oferece.
 A selecao de audio continua sendo feita dentro do player/fonte quando existir.
 
 IPHONE / PWA E TELA CHEIA
-O MovieBox tenta usar o modo de tela cheia permitido pelo Safari. O iOS pode manter a barra de status em PWAs mesmo em fullscreen/standalone; isso e uma limitacao do WebKit. No APK Android a v1.4 consegue ocultar as barras do sistema com o recurso nativo.
+O Media Box tenta usar o modo de tela cheia permitido pelo Safari. O iOS pode manter a barra de status em PWAs mesmo em fullscreen/standalone; isso e uma limitacao do WebKit. No APK Android a v1.4 consegue ocultar as barras do sistema com o recurso nativo.
 
 DOWNLOADS
 O DownloadManager pode melhorar estabilidade, retomada pelo sistema e comportamento em segundo plano, mas nao pode ultrapassar limites de velocidade impostos pelo servidor, Wi-Fi/4G/5G ou provedor.

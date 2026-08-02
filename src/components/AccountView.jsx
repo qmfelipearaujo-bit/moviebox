@@ -28,7 +28,7 @@ export default function AccountView() {
 
   return (
     <main className="page padded-page account-page">
-      <div className="page-head"><div><span className="eyebrow">CONTA E NUVEM</span><h1>Seu MovieBox em qualquer aparelho</h1><p className="page-subtitle">Com uma conta gratuita Supabase, favoritos e histórico podem voltar mesmo depois de reinstalar o app.</p></div></div>
+      <div className="page-head"><div><span className="eyebrow">CONTA E NUVEM</span><h1>Seu Media Box em qualquer aparelho</h1><p className="page-subtitle">Com uma conta gratuita Supabase, favoritos e histórico podem voltar mesmo depois de reinstalar o app.</p></div></div>
 
       {!isCloudConfigured() ? <section className="account-card">
         <span className="eyebrow">CONFIGURAÇÃO DO PROPRIETÁRIO</span><h2>Conectar Supabase</h2><p>Crie um projeto gratuito no Supabase e cole aqui o Project URL e a chave pública/anon. Depois execute o SQL incluído no arquivo <b>SUPABASE_LOGIN.txt</b>.</p>
@@ -36,7 +36,7 @@ export default function AccountView() {
         <label>Publishable / anon key<input type="password" value={config.key || ''} onChange={(e) => setConfig((x) => ({...x,key:e.target.value}))} placeholder="sb_publishable_… ou eyJ…" /></label>
         <button className="primary" onClick={saveConfig}>Salvar configuração</button>
       </section> : session?.access_token ? <section className="account-card account-signed">
-        <div className="account-avatar">👤</div><div><span className="eyebrow">CONECTADO</span><h2>{session.user?.email || 'Conta MovieBox'}</h2><p>Favoritos e histórico são sincronizados automaticamente. Downloads permanecem somente no aparelho.</p></div>
+        <div className="account-avatar">👤</div><div><span className="eyebrow">CONECTADO</span><h2>{session.user?.email || 'Conta Media Box'}</h2><p>Favoritos e histórico são sincronizados automaticamente. Downloads permanecem somente no aparelho.</p></div>
         <div className="account-actions"><button className="secondary" disabled={busy} onClick={() => run(async () => { await pullCloudLibrary(false); return 'Dados restaurados da nuvem.' })}>↓ Restaurar da nuvem</button><button className="secondary" disabled={busy} onClick={() => run(async () => { await pushCloudLibrary(); return 'Dados enviados para a nuvem.' })}>↑ Enviar agora</button><button className="text-btn" onClick={() => { signOut(); setSession(null); setMessage('Sessão encerrada.') }}>Sair</button></div>
       </section> : <section className="account-card">
         <span className="eyebrow">LOGIN</span><h2>Entrar ou criar conta</h2><p>Use o mesmo e-mail em outro aparelho para recuperar favoritos e histórico.</p>

@@ -1,8 +1,14 @@
 {
   "appId": "com.moviebox.personal",
-  "appName": "MovieBox Private",
+  "appName": "Media Box",
   "webDir": "dist",
   "server": {
     "androidScheme": "https"
+  },
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "css",
+      "hidden": false
+    }
   }
 }
