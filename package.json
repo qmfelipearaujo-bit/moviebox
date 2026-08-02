@@ -1,7 +1,7 @@
 {
   "name": "moviebox-private",
   "private": true,
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,9 @@
     "@capacitor/android": "8.4.2",
     "@capacitor/core": "8.4.2",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "@capacitor/file-transfer": "2.0.4",
+    "@capacitor/filesystem": "8.1.2"
   },
   "devDependencies": {
     "@capacitor/cli": "8.4.2",

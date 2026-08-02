@@ -1,0 +1,17 @@
+MOVIEBOX PRIVATE v0.7 - ATUALIZAÇÃO NO GITHUB
+
+Você já conseguiu gerar o APK pela nuvem. Para esta versão:
+
+1. Extraia moviebox-private-cloud-v0.7.zip.
+2. Abra seu repositório MovieBox no GitHub.
+3. Substitua os arquivos antigos pelos arquivos desta pasta.
+   IMPORTANTE: envie também a pasta .github/workflows.
+4. Não envie seu arquivo .env com token pessoal.
+5. Confirme as alterações (Commit changes).
+6. Abra Actions > Gerar APK Android.
+7. Clique em Run workflow.
+8. Aguarde Success.
+9. Na página Summary, baixe o artifact MovieBox-Private-APK.
+10. Extraia e instale MovieBox-Private-debug.apk.
+
+Na primeira abertura, seu token TMDB já continuará salvo se você estiver apenas atualizando o APK com o mesmo appId (com.moviebox.personal). Se o Android tratar como atualização da instalação existente, seus dados locais e downloads anteriores tendem a permanecer.

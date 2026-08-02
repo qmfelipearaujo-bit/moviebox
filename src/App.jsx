@@ -19,7 +19,7 @@ function Header({ view, setView }) {
         <button className={view === 'home' ? 'active' : ''} onClick={() => setView('home')}>Início</button>
         <button className={view === 'search' ? 'active' : ''} onClick={() => setView('search')}>Pesquisar</button>
         <button className={view === 'library' ? 'active' : ''} onClick={() => setView('library')}>Minha lista</button>
-        <button className={view === 'downloads' ? 'active' : ''} onClick={() => setView('downloads')}>Downloads</button>
+        <button className={view === 'downloads' ? 'active' : ''} onClick={() => setView('downloads')}>Offline</button>
       </nav>
     </header>
   )
