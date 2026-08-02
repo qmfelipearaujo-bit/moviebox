@@ -102,10 +102,10 @@ function CustomSources({ sources, onAdd, onRemove, downloads, tasks, onDownload,
   return (
     <div className="custom-source-wrap">
       <form className="custom-source-form" onSubmit={submit}>
-        <div><span className="eyebrow">LABORATÓRIO DE LINKS</span><h2>Adicionar sua própria fonte legal</h2><p>Use uma URL direta HTTP/HTTPS de vídeo, um arquivo .torrent ou magnet. O MovieBox não tenta descobrir nem contornar proteções; ele usa exatamente a fonte que você informar.</p></div>
+        <div><span className="eyebrow">LABORATÓRIO DE LINKS</span><h2>Adicionar sua própria fonte</h2><p>Use uma URL direta HTTP/HTTPS de vídeo, um arquivo .torrent ou magnet. O MovieBox usa exatamente a fonte que você informar e não exige um tipo específico de licença para habilitar a função.</p></div>
         <label>Título<input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Meu filme de teste" /></label>
         <label>URL / Magnet<textarea value={form.url} onChange={(e) => setForm({ ...form, url: e.target.value })} placeholder="https://servidor/filme.mp4  ou  magnet:?xt=..." rows="3" required /></label>
-        <div className="form-two"><label>Licença / observação<input value={form.license} onChange={(e) => setForm({ ...form, license: e.target.value })} placeholder="Ex.: CC BY 4.0" /></label><label>Poster opcional<input value={form.poster} onChange={(e) => setForm({ ...form, poster: e.target.value })} placeholder="https://.../poster.jpg" /></label></div>
+        <div className="form-two"><label>Direitos / observação<input value={form.license} onChange={(e) => setForm({ ...form, license: e.target.value })} placeholder="Opcional" /></label><label>Poster opcional<input value={form.poster} onChange={(e) => setForm({ ...form, poster: e.target.value })} placeholder="https://.../poster.jpg" /></label></div>
         <button className="primary" type="submit">+ Adicionar fonte</button>
       </form>
 
@@ -116,7 +116,7 @@ function CustomSources({ sources, onAdd, onRemove, downloads, tasks, onDownload,
         const mime = /\.webm(?:\?|$)/i.test(item.url) ? 'video/webm' : /\.ogv(?:\?|$)/i.test(item.url) ? 'video/ogg' : 'video/mp4'
         return <article className="custom-source-card" key={item.id}>
           <div className="custom-source-icon">{direct ? '🎞️' : item.type === 'magnet' ? '🧲' : '🌐'}</div>
-          <div className="custom-source-info"><span className="eyebrow">{item.type === 'direct' ? 'DOWNLOAD DIRETO' : item.type === 'magnet' ? 'MAGNET' : 'TORRENT'}</span><h3>{item.title}</h3><p className="source-url">{item.url}</p><small>{item.license}</small>
+          <div className="custom-source-info"><span className="eyebrow">{item.type === 'direct' ? 'DOWNLOAD DIRETO' : item.type === 'magnet' ? 'MAGNET' : 'TORRENT'}</span><h3>{item.title}</h3><p className="source-url">{item.url}</p><small>{item.license || 'Direitos não informados'}</small>
             {task?.status === 'downloading' && <DownloadProgress task={task} />}
           </div>
           <div className="custom-source-actions">
@@ -153,7 +153,7 @@ export default function DownloadsView() {
     try {
       const items = await searchOpenMovies(query)
       setArchiveItems(items)
-      if (!items.length) setMessage('Nenhum resultado com licença aberta explícita foi encontrado. Tente outro termo.')
+      if (!items.length) setMessage('Nenhum resultado foi encontrado. Tente outro termo.')
     } catch (error) { setMessage(`Falha ao pesquisar no Internet Archive: ${error?.message || 'erro desconhecido'}`) }
     finally { setArchiveLoading(false) }
   }
@@ -204,9 +204,9 @@ export default function DownloadsView() {
 
   return (
     <main className="page padded-page offline-page">
-      <div className="page-head"><div><span className="eyebrow">MODO OFFLINE · v0.9</span><h1>Downloads e fontes</h1><p className="page-subtitle">Catálogo aberto, Internet Archive e um laboratório para você testar suas próprias URLs legais.</p></div></div>
+      <div className="page-head"><div><span className="eyebrow">MODO OFFLINE · v1.0</span><h1>Downloads e fontes</h1><p className="page-subtitle">Internet Archive, Open Movies e uma área livre para você testar as fontes que escolher.</p></div></div>
 
-      <div className="offline-note legal-note"><strong>O download só é habilitado automaticamente quando a fonte informa licença aberta/domínio público.</strong><p>No Internet Archive, o MovieBox filtra metadados de licença e só então procura MP4/WebM. Em “Meus Links”, você é responsável por usar fontes que tenha direito de acessar e baixar.</p></div>
+      <div className="offline-note legal-note"><strong>O MovieBox não bloqueia downloads com base no campo de licença.</strong><p>Quando a fonte fornece informações de direitos/licença, o aplicativo apenas as exibe. A decisão de usar uma fonte fica com o proprietário do aplicativo.</p></div>
       {!nativeSupported && <div className="offline-note warning-note"><strong>Abra no APK Android para baixar.</strong><p>No navegador é possível pesquisar e cadastrar fontes, mas o armazenamento offline nativo funciona dentro do aplicativo instalado.</p></div>}
       {message && <div className="offline-message">{message}</div>}
 
@@ -219,7 +219,7 @@ export default function DownloadsView() {
 
       {tab === 'archive' && <>
         <form className="archive-search" onSubmit={(e) => { e.preventDefault(); runArchiveSearch() }}><input value={archiveQuery} onChange={(e) => setArchiveQuery(e.target.value)} placeholder="Pesquisar título, assunto..." /><button className="primary" type="submit">Pesquisar</button></form>
-        <div className="archive-hint">Resultados da coleção Open Source Movies com licença aberta explícita nos metadados. A licença é verificada novamente antes de mostrar os arquivos.</div>
+        <div className="archive-hint">Resultados de vídeos do Internet Archive. O MovieBox mostra os metadados de direitos quando existirem, mas não exige licença aberta para listar os arquivos disponíveis.</div>
         {archiveLoading ? <div className="full-loader compact-loader"><span className="loader" /><p>Pesquisando Internet Archive…</p></div> : <div className="offline-grid">{archiveItems.map((item) => <ArchiveCard key={item.id} item={item} resolved={archiveResolved[item.id]} downloaded={downloads.find((d) => d.downloadId === item.id)} task={tasks[item.id]} onResolve={resolveArchive} onDownload={download} onPlay={play} onDelete={remove} onMessage={setMessage} />)}</div>}
       </>}
 

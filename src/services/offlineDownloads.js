@@ -1,7 +1,7 @@
 import { Capacitor } from '@capacitor/core'
 import { Directory, Filesystem } from '@capacitor/filesystem'
 import { FileTransfer } from '@capacitor/file-transfer'
-import { getDownloads, registerAuthorizedDownload, removeDownload as removeDownloadMetadata } from './storage'
+import { getDownloads, registerDownload, removeDownload as removeDownloadMetadata } from './storage'
 
 const DOWNLOAD_DIR = 'moviebox-offline'
 
@@ -43,7 +43,7 @@ export async function downloadOfflineMovie(item, media, option, onProgress = () 
       path: fileInfo.uri,
       progress: true,
       headers: {
-        'User-Agent': 'MovieBoxPrivate/0.9 (personal Android app; authorized media download)',
+        'User-Agent': 'MovieBoxPrivate/1.0 (personal Android app; user-selected media download)',
         'Accept': 'video/webm,video/mp4,video/ogg,*/*',
       },
     })
@@ -63,12 +63,12 @@ export async function downloadOfflineMovie(item, media, option, onProgress = () 
     localPath: path,
     mime: option.mime,
     sourceUrl: media.descriptionUrl || media.sourceUrl || option.url,
-    license: media.license || item.license || item.expectedLicense || 'Fonte autorizada',
+    license: media.license || item.license || item.expectedLicense || 'Direitos não informados',
     attribution: item.attribution || media.creator || item.creator || '',
     thumbUrl: media.thumbUrl || item.thumbUrl || item.poster || '',
     savedAt: Date.now(),
   }
-  registerAuthorizedDownload(record)
+  registerDownload(record)
   return record
 }
 

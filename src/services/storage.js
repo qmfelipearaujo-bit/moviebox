@@ -52,7 +52,7 @@ export function getDownloads() {
   return read(KEYS.downloads)
 }
 
-export function registerAuthorizedDownload(item) {
+export function registerDownload(item) {
   const items = getDownloads().filter((x) => x.downloadId !== item.downloadId)
   return write(KEYS.downloads, [item, ...items].slice(0, 100))
 }
@@ -60,3 +60,6 @@ export function registerAuthorizedDownload(item) {
 export function removeDownload(downloadId) {
   return write(KEYS.downloads, getDownloads().filter((x) => x.downloadId !== downloadId))
 }
+
+// Compatibilidade com versões antigas do código.
+export const registerAuthorizedDownload = registerDownload

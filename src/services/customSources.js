@@ -31,7 +31,7 @@ export function addCustomSource(input) {
     title,
     url,
     type,
-    license: String(input?.license || '').trim() || 'Fonte informada pelo usuário',
+    license: String(input?.license || '').trim() || 'Direitos não informados',
     poster: String(input?.poster || '').trim(),
     addedAt: Date.now(),
   }

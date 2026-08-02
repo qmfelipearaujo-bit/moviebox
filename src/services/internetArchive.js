@@ -36,7 +36,7 @@ function friendlyLicense(metadata = {}) {
     if (match) return `CC ${match[1].toUpperCase()} ${match[2]}`
     if (/publicdomain\/zero/i.test(licenseUrl)) return 'CC0'
   }
-  return rights || 'Licença aberta informada pela fonte'
+  return rights || 'Direitos/licença não informados'
 }
 
 function descriptionText(value) {
@@ -119,7 +119,7 @@ export function formatBytes(bytes) {
 
 export async function searchOpenMovies(term = '', page = 1) {
   const clean = cleanSearchTerm(term)
-  const queryParts = ['mediatype:movies', 'collection:opensource_movies', '(licenseurl:* OR rights:*)']
+  const queryParts = ['mediatype:movies']
   if (clean) {
     const words = clean.split(' ').filter(Boolean).slice(0, 6)
     queryParts.push(words.map((word) => `(title:${word} OR description:${word} OR subject:${word})`).join(' AND '))
@@ -129,7 +129,7 @@ export async function searchOpenMovies(term = '', page = 1) {
   params.set('q', queryParts.join(' AND '))
   ;['identifier', 'title', 'description', 'year', 'licenseurl', 'rights', 'creator', 'downloads'].forEach((field) => params.append('fl[]', field))
   params.append('sort[]', 'downloads desc')
-  params.set('rows', '50')
+  params.set('rows', '60')
   params.set('page', String(page))
   params.set('output', 'json')
 
@@ -138,14 +138,13 @@ export async function searchOpenMovies(term = '', page = 1) {
   const data = await response.json()
   const docs = data?.response?.docs || []
   return docs
-    .filter(isClearlyOpen)
-    .slice(0, 18)
+    .slice(0, 24)
     .map((doc) => ({
       id: `ia:${doc.identifier}`,
       identifier: doc.identifier,
       title: asText(doc.title) || doc.identifier,
       year: asText(doc.year),
-      description: descriptionText(doc.description) || 'Item de vídeo disponibilizado no Internet Archive com licença aberta informada nos metadados.',
+      description: descriptionText(doc.description) || 'Item de vídeo disponibilizado no Internet Archive.',
       creator: asText(doc.creator),
       downloads: Number(doc.downloads || 0),
       license: friendlyLicense(doc),
@@ -162,9 +161,6 @@ export async function getArchiveMovie(item) {
   if (!response.ok) throw new Error(`Não foi possível consultar os arquivos (${response.status}).`)
   const data = await response.json()
   const metadata = data?.metadata || {}
-  if (!isClearlyOpen(metadata)) {
-    throw new Error('Este item não possui licença aberta/domínio público suficientemente clara nos metadados para habilitar o download automático.')
-  }
   const options = videoOptions(identifier, data?.files || [])
   if (!options.length) throw new Error('Nenhum MP4/WebM compatível foi encontrado neste item.')
   return {

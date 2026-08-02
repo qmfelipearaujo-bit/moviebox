@@ -202,7 +202,7 @@ button { color: inherit; }
   .downloaded-actions .primary { flex:1; }
 }
 
-/* v0.9 · Internet Archive + laboratório de fontes legais */
+/* v1.0 · Internet Archive + laboratório de fontes */
 .four-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
 .archive-search { margin-top:18px; display:grid; grid-template-columns:1fr auto; gap:10px; }
 .archive-search input, .custom-source-form input, .custom-source-form textarea { width:100%; min-width:0; color:#fff; background:#0b0d13; border:1px solid var(--line); border-radius:10px; padding:12px 13px; outline:none; }

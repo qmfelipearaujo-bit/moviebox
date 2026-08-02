@@ -1,0 +1,19 @@
+MOVIEBOX PRIVATE v1.0
+
+NOVIDADES
+- Removido o bloqueio que exigia licença aberta/domínio público para habilitar downloads.
+- Internet Archive agora lista vídeos independentemente de o campo de licença estar preenchido.
+- Ao abrir um item, o MovieBox procura MP4/WebM disponíveis sem fazer validação de licença.
+- Direitos/licença continuam visíveis quando a fonte informa esses dados, mas são apenas informativos.
+- Aba Meus Links aceita URL direta, .torrent e magnet; o campo Direitos/observação é opcional.
+- Mantidos downloads nativos, reprodução offline, player protegido contra pop-ups, TMDB e EmbedMovies.
+
+ATUALIZAÇÃO NO GITHUB
+1. Extraia o ZIP completo v1.0.
+2. Substitua os arquivos do repositório pelos arquivos da v1.0.
+3. Commit changes.
+4. Actions > Gerar APK Android > Run workflow.
+5. Ao terminar em verde, baixe Artifacts > MovieBox-Private-APK.
+6. Instale o APK por cima da versão atual.
+
+O package Android continua: com.moviebox.personal
